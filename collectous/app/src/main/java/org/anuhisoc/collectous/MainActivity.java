@@ -1,18 +1,18 @@
-package com.anuhisoc.collectous.entry;
+package org.anuhisoc.collectous;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.anuhisoc.collectous.R;
+import timber.log.Timber;
 
-public class EntryActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entry);
+        setContentView(R.layout.activity_main);
 
-        
     }
 }

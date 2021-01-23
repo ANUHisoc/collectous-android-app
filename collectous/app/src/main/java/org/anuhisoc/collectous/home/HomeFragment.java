@@ -1,4 +1,4 @@
-package com.anuhisoc.collectous.entry;
+package org.anuhisoc.collectous.home;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,23 +12,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.anuhisoc.collectous.R;
+import org.anuhisoc.collectous.R;
+import org.anuhisoc.collectous.databinding.FragmentHomeBinding;
 
-public class LoginFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
-    private LoginViewModel loginViewModel;
-
+    private HomeViewModel homeViewModel;
+    private FragmentHomeBinding binding;
+    public HomeFragment() { }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        binding = FragmentHomeBinding.inflate(inflater,container,false);
+        return binding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+       homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
 
     }
 

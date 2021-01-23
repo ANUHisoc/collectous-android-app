@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".entry.EntryActivity">
+    tools:context="org.anuhisoc.collectous.entry.EntryActivity">
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/entry_fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

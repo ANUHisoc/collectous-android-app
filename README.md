@@ -13,7 +13,7 @@
 
 
 ### 📜 Description:
-A simple household based data collection Android application which uses Google Sheets as it's cloud storage.
+<span style="color:blue">**Collectous**</span> is Android app which enables data <span style="color:blue">**collect**</span>ion at an h<span style="color:blue">**ous**</span>ehold level to be done with ease.
 
 ### 📒 Documentation:
 -   [Product Backlog]()
