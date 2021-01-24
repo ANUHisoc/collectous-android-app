@@ -50,8 +50,8 @@ class EntryActivity : AppCompatActivity() {
             }
         }
 
-        entryViewModel.credentialLiveData.observe(this, Observer { credential: SignInCredential? ->
-            credential?.let {
+        entryViewModel.accountLiveData.observe(this, Observer { account: GoogleSignInAccount? ->
+            account?.let {
                 /*ViewModel will be updated on the account details via SignInFragment; Need to remove Fragment once done;
                  Account will be null if sign in process failed*/
                 startMainActivity()

@@ -1,8 +1,6 @@
 package org.anuhisoc.collectous.entry;
 
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,21 +8,18 @@ import android.view.ViewGroup;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.IntentSenderRequest;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.activity.result.contract.ActivityResultContracts.StartIntentSenderForResult;
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.gms.auth.api.identity.BeginSignInRequest;
-import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions;
-import com.google.android.gms.auth.api.identity.GetSignInIntentRequest;
-import com.google.android.gms.auth.api.identity.Identity;
-import com.google.android.gms.auth.api.identity.SignInClient;
-import com.google.android.gms.auth.api.identity.SignInCredential;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -39,11 +34,12 @@ public class SignInFragment extends Fragment {
 
     private FragmentSignInBinding binding;
     private EntryViewModel entryViewModel;
+    private GoogleSignInClient googleSignInClient;
 
     public SignInFragment() { }
 
-    private final ActivityResultLauncher<IntentSenderRequest> signInLauncherHandler =
-            registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(), result -> {
+    private final ActivityResultLauncher<Intent> signInLauncherHandler =
+            registerForActivityResult(new StartActivityForResult(), result -> {
                 Timber.d("Sign In Activity Result %s", result.toString());
                 handleSignInResult(result);
             });
@@ -60,7 +56,15 @@ public class SignInFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        entryViewModel = new ViewModelProvider(getActivity()).get(EntryViewModel.class);
+        if(getActivity()!=null)
+            entryViewModel = new ViewModelProvider(getActivity()).get(EntryViewModel.class);
+        GoogleSignInOptions signInOption = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestProfile()
+                .build();
+
+        if(getContext()!=null)
+            googleSignInClient = GoogleSignIn.getClient(getContext(),signInOption);
     }
 
 
@@ -71,61 +75,17 @@ public class SignInFragment extends Fragment {
     }
 
 
-    private void signIn() {
-
-        /*https://developers.google.com/identity/sign-in/android/sign-in-identity
-        Set Client -ID; Get this from Google Cloud console*/
-        GetSignInIntentRequest request =
-                GetSignInIntentRequest.builder()
-                        .build();
-
-        /*https://developers.google.com/android/reference/com/google/android/gms/auth/api/identity/SignInClient*/
-       /* BeginSignInRequest request = BeginSignInRequest.builder()
-                .setPasswordRequestOptions(
-                        BeginSignInRequest.PasswordRequestOptions.builder()
-                                .setSupported(false)
-                                .build())
-                .setGoogleIdTokenRequestOptions(
-                        GoogleIdTokenRequestOptions.builder()
-                                .setSupported(false)
-                                .setFilterByAuthorizedAccounts(false)
-                                .build())
-                .build();*/
-
-
-        if (getActivity() != null) {
-            Identity.getSignInClient(getActivity())
-                    .getSignInIntent(request)
-                    .addOnSuccessListener(
-                            result -> {signInLauncherHandler.launch(new IntentSenderRequest
-                                    .Builder(result.getIntentSender()).build());})
-                    .addOnFailureListener(
-                            e -> {
-                                Timber.e("Sign In Activity failed");
-                            });
-
-            /*SignInClient signInClient = Identity.getSignInClient(getActivity());
-            signInClient.beginSignIn(request)
-                    .addOnSuccessListener(
-                            result ->
-                            {
-                                try {
-                                    result.getPendingIntent().send();
-                                } catch (PendingIntent.CanceledException e) {
-                                    e.printStackTrace();
-                                }
-
-                            })
-                    .addOnFailureListener( e-> Timber.e("Sign In Activity failed"));*/
-
-        }
+    private void signIn(){
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        signInLauncherHandler.launch(signInIntent);
     }
 
 
     private void handleSignInResult(ActivityResult result) {
         try {
-            SignInCredential credential = Identity.getSignInClient(getActivity()).getSignInCredentialFromIntent(result.getData());
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
             Timber.d("Successful sign in ");
+            GoogleSignInAccount account = task.getResult(ApiException.class);
 
             Snackbar snackbar = Snackbar.make(binding.getRoot(),"Successfully Signed In", BaseTransientBottomBar.LENGTH_SHORT);
 
@@ -133,16 +93,16 @@ public class SignInFragment extends Fragment {
                 @Override
                 public void onDismissed(Snackbar transientBottomBar, int event) {
                     super.onDismissed(transientBottomBar, event);
-                    entryViewModel.updateGoogleCredential(credential);
+                    entryViewModel.updateGoogleAccount(account);
                     snackbar.removeCallback(this);
                 }
             });
             snackbar.show();
+
         } catch (ApiException e) {
-            Timber.d("Failed sign in %s", e.toString());
+            Timber.d("Failed sign in ");
             Snackbar.make(binding.getRoot(),"Error",Snackbar.LENGTH_SHORT).show();
         }
     }
-
 
 }
