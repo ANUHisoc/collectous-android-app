@@ -13,13 +13,17 @@
 
 
 ### 📜 Description:
-<span style="color:blue">**Collectous**</span> is Android app which enables data <span style="color:blue">**collect**</span>ion at an h<span style="color:blue">**ous**</span>ehold level to be done with ease.
+**Collectous** is Android app which enables data **collect**ion at an h**ous**ehold level to be done with ease.
 
 ### 📒 Documentation:
 -   [Product Backlog]()
 -   [Plans]()
 
 ### 🛠️ Tools used:
+
+- DataStore, ViewModel, LiveData,
+- Libraries/APIs: [Timber](https://github.com/JakeWharton/timber),[Material Design Component](https://github.com/material-components/material-components-android),
+- Languages: Java & Kotlin
 
 
 ### 🔖 References/Credits:

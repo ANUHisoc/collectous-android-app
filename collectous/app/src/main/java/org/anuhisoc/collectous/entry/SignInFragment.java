@@ -22,7 +22,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.anuhisoc.collectous.databinding.FragmentSignInBinding;
 
+import java.io.File;
+
 import timber.log.Timber;
+
 
 
 public class SignInFragment extends Fragment {
@@ -107,5 +110,15 @@ public class SignInFragment extends Fragment {
             Snackbar.make(binding.getRoot(),"Error",Snackbar.LENGTH_SHORT).show();
         }
     }
+
+
+
+/*    private fun downloadSaveProfilePicture(){
+        Timber.d("Downloading and Saving profile picture")
+        val file = account?.photoUrl?.toFile()
+        applicationContext?.openFileOutput("user_profile_picture", Context.MODE_PRIVATE).use {
+            it?.write(file?.readBytes())
+        }
+    }*/
 
 }
