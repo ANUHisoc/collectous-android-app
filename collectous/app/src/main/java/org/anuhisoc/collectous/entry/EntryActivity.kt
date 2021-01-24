@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.auth.api.identity.SignInCredential
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.coroutines.launch
@@ -49,8 +50,8 @@ class EntryActivity : AppCompatActivity() {
             }
         }
 
-        entryViewModel.accountLiveData.observe(this, Observer { account: GoogleSignInAccount? ->
-            account?.let {
+        entryViewModel.credentialLiveData.observe(this, Observer { credential: SignInCredential? ->
+            credential?.let {
                 /*ViewModel will be updated on the account details via SignInFragment; Need to remove Fragment once done;
                  Account will be null if sign in process failed*/
                 startMainActivity()

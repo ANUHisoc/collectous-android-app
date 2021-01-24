@@ -29,11 +29,9 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-       homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
-
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
     }
 
 }

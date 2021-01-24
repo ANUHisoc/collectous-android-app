@@ -1,9 +1,6 @@
 package org.anuhisoc.collectous.entry
 
 import android.app.Application
-import android.content.Context
-import androidx.core.graphics.drawable.toIcon
-import androidx.core.net.toFile
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -13,7 +10,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.identity.SignInCredential
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -28,8 +25,8 @@ import java.io.File
 
 class EntryViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var _accountLiveData: MutableLiveData<GoogleSignInAccount> = MutableLiveData()
-    val accountLiveData:LiveData<GoogleSignInAccount> get() = _accountLiveData
+    private var _credentialLiveData: MutableLiveData<SignInCredential> = MutableLiveData()
+    val credentialLiveData:LiveData<SignInCredential> get() = _credentialLiveData
 
     private val dataStore: DataStore<Preferences>?
         get() = getApplication<Application>().createDataStore("settings")
@@ -40,10 +37,10 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
     companion object{
         const val ON_BOARDING_KEY = "isOnBoardingCompletedKey" }
 
-    fun updateGoogleAccount(account: GoogleSignInAccount?) {
-        if(account!=null){
-            val job = viewModelScope.launch { downloadSaveProfilePicture(account) }
-            job.invokeOnCompletion { _accountLiveData.value = account }
+    fun updateGoogleCredential(credential: SignInCredential?) {
+        if(credential!=null){
+            val job = viewModelScope.launch { downloadSaveProfilePicture(credential) }
+            job.invokeOnCompletion { _credentialLiveData.value = credential }
         }
     }
 
@@ -64,7 +61,7 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
 
 
     /*TODO we need to query for space before saving it to app specific internal storage*/
-    private fun downloadSaveProfilePicture(account: GoogleSignInAccount){
+    private fun downloadSaveProfilePicture(credential: SignInCredential){
         Timber.d("Downloading and Saving profile picture")
         /*val profilePicture = account.photoUrl?.toFile()?.toURI()?.let { File(it) }
         getApplication<Application>().applicationContext?.openFileOutput("user_profile_picture", Context.MODE_PRIVATE).use {
