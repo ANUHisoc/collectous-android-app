@@ -13,13 +13,17 @@
 
 
 ### 📜 Description:
-A simple household based data collection Android application which uses Google Sheets as it's cloud storage.
+**Collectous** is Android app which enables data **collect**ion at an h**ous**ehold level to be done with ease.
 
 ### 📒 Documentation:
 -   [Product Backlog]()
 -   [Plans]()
 
 ### 🛠️ Tools used:
+
+- DataStore, ViewModel, LiveData,
+- Libraries/APIs: [Timber](https://github.com/JakeWharton/timber),[Material Design Component](https://github.com/material-components/material-components-android),
+- Languages: Java & Kotlin
 
 
 ### 🔖 References/Credits:
