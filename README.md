@@ -22,7 +22,7 @@
 ### 🛠️ Tools used:
 
 - DataStore, ViewModel, LiveData,
-- Libraries/APIs: [Timber](https://github.com/JakeWharton/timber),[Material Design Component](https://github.com/material-components/material-components-android), [Google Sign - In API](https://developers.google.com/identity/sign-in/android/start-integrating), [Volley](https://developer.android.com/training/volley)
+- Libraries/APIs: [Timber](https://github.com/JakeWharton/timber),[Material Design Component](https://github.com/material-components/material-components-android), [Google Sign - In API](https://developers.google.com/identity/sign-in/android/start-integrating), [Volley](https://developer.android.com/training/volley),[Glide](https://github.com/bumptech/glide)
 - Languages: Java & Kotlin
 
 
