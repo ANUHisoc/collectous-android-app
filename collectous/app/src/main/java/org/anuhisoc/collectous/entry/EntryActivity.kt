@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.auth.api.identity.SignInCredential
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.coroutines.launch
@@ -20,7 +19,7 @@ import timber.log.Timber.DebugTree
 
 /**
  * This class is in Kotlin as DataStore is based on Kotlin. https://developer.android.com/topic/libraries/architecture/datastore#kotlin
- * We could use java, but we need to use RxJava for it. Sidenote: I am not familiar with RxJava and am planning to learn it.*/
+ * We could use java, but we need to use RxJava for it.*/
 
 class EntryActivity : AppCompatActivity() {
 
@@ -67,7 +66,7 @@ class EntryActivity : AppCompatActivity() {
     }
 
 
-    /* Custom method to launch fragments;
+    /*Custom method to launch fragments;
     Checks for any savedInstanceState - to prevent fragment being created again upon device rotation*/
     private fun launchFragment(fragment: Fragment,savedInstanceState: Bundle?) {
         if(savedInstanceState==null)

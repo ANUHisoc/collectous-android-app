@@ -100,7 +100,7 @@ public class SignInFragment extends Fragment {
             snackbar.show();
 
         } catch (ApiException e) {
-            Timber.d("Failed sign in ");
+            Timber.d("Failed sign in %s", e.toString());
             Snackbar.make(binding.getRoot(),"Error",Snackbar.LENGTH_SHORT).show();
         }
     }
