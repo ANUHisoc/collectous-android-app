@@ -18,8 +18,6 @@ public class LoadingFragment extends Fragment {
 
     public LoadingFragment() { }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
