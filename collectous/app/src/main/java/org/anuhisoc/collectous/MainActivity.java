@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 
@@ -49,9 +50,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
+            int dpi = getResources().getDisplayMetrics().densityDpi;
+            int iconSize = UtilKt.toPx(getResources().getInteger(R.integer.nav_icon_size),dpi);
             Glide.with(this)
                     .load(file)
                     .circleCrop()
+                    .apply(new RequestOptions().override(iconSize,iconSize))
                     .into(target);
         }
     }

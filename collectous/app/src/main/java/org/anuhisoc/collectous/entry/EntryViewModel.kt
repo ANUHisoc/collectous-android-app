@@ -61,7 +61,7 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
     private val profileEmailKey
         get() = getApplication<Application>().getString(R.string.data_store_key_profile_email)
 
-    
+
     fun updateGoogleAccount(account: GoogleSignInAccount?) {
         if (account != null) {
             val profilePictureOutputStream = FileOutputStream(File(getApplication<Application>().filesDir, profilePictureFileName))
