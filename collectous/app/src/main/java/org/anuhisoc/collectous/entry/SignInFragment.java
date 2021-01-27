@@ -53,29 +53,32 @@ public class SignInFragment extends Fragment {
     }
 
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getActivity()!=null)
-            entryViewModel = new ViewModelProvider(getActivity()).get(EntryViewModel.class);
-        GoogleSignInOptions signInOption = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .requestProfile()
-                .build();
+        Timber.d("onCreate");
+            GoogleSignInOptions signInOption = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .requestProfile()
+                    .build();
 
-        if(getContext()!=null)
-            googleSignInClient = GoogleSignIn.getClient(getContext(),signInOption);
+            if (getContext() != null)
+                googleSignInClient = GoogleSignIn.getClient(getContext(), signInOption);
+
     }
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        entryViewModel = new ViewModelProvider(requireActivity()).get(EntryViewModel.class);
         binding.signInButton.setOnClickListener(signInButton -> signIn());
     }
 
 
     private void signIn(){
+        Timber.d("signIn()");
         Intent signInIntent = googleSignInClient.getSignInIntent();
         signInLauncherHandler.launch(signInIntent);
     }

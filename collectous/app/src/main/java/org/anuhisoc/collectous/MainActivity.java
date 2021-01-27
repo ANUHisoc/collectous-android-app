@@ -22,7 +22,7 @@ import timber.log.Timber;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private CustomTarget<Drawable> target;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadNavigationIcon(){
         File file = new File(getApplicationContext().getFilesDir(),getString(R.string.filename_profile_picture));
         if(file.exists()) {
-            target = new CustomTarget<Drawable>() {
+            CustomTarget<Drawable> target = new CustomTarget<Drawable>() {
                 @Override
                 public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                     Timber.d("Loading Nav Icon onto toolbar");
@@ -61,9 +61,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Glide.with(this).clear(target);
-    }
+
 }

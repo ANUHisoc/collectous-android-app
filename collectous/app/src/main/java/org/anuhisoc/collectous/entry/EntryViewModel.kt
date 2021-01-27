@@ -16,6 +16,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.volley.Response
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley.newRequestQueue
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -40,6 +41,15 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
 
     private var _accountLiveData: MutableLiveData<GoogleSignInAccount> = MutableLiveData()
     val accountLiveData: LiveData<GoogleSignInAccount> get() = _accountLiveData
+
+    private val isAlreadySignedIn: Boolean
+        get() = GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)!=null
+
+
+    private var isDataSuccessfullyCached: Boolean = false
+
+    val isSignInProcessCompleted:Boolean
+        get() = isAlreadySignedIn && isDataSuccessfullyCached
 
     private val dataStore: DataStore<Preferences>?
         get() = getApplication<Application>()
@@ -72,12 +82,16 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
                     cacheEmail(account)
                 }
             }
-            cacheAccountInfoJob.invokeOnCompletion {
-                _accountLiveData.value = account
-                Timber.d("Updated Google Account")
-            }
+            cacheAccountInfoJob.invokeOnCompletion { cause ->   Timber.d("job $cause")
+                if(cause==null){
+                    isDataSuccessfullyCached = true
+                    _accountLiveData.value = account
+                    Timber.d("Updated Google Account")
+                } }
+
         }
     }
+
 
     private suspend fun cacheName(account: GoogleSignInAccount){
         account.displayName?.let {name->
@@ -91,6 +105,7 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
             val emailPrefKey = stringPreferencesKey(profileEmailKey)
             dataStore?.store(emailPrefKey,email) }
     }
+
 
     private suspend fun isOnBoardingCompleted(): Boolean {
         val isOnBoardingKey = booleanPreferencesKey(onBoardingKey)
