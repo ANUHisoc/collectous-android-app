@@ -12,7 +12,10 @@
         tools:layout="@layout/fragment_drive_compatibility" >
         <action
             android:id="@+id/action_driveCompatibilityFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
+            app:destination="@id/mainActivity"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+          />
     </fragment>
     <fragment
         android:id="@+id/drivePermissionFragment"
@@ -21,7 +24,11 @@
         tools:layout="@layout/fragment_drive_permission" >
         <action
             android:id="@+id/action_drivePermissionFragment_to_driveCompatibilityFragment"
-            app:destination="@id/driveCompatibilityFragment" />
+            app:destination="@id/driveCompatibilityFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/setupFragment"
@@ -30,7 +37,11 @@
         tools:layout="@layout/fragment_setup" >
         <action
             android:id="@+id/action_setupFragment_to_drivePermissionFragment"
-            app:destination="@id/drivePermissionFragment" />
+            app:destination="@id/drivePermissionFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"

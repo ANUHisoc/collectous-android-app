@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.fragment.app.Fragment
@@ -24,8 +23,8 @@ import timber.log.Timber
 
 class SignInFragment : Fragment() {
     private lateinit var binding: FragmentSignInBinding
-    private val  signInViewModel: SignInViewModel by viewModels()
-    private val entryViewModel:EntryViewModel by activityViewModels()
+
+    private val signInViewModel: SignInViewModel by viewModels()
     private val signInLauncherHandler = registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
         Timber.d("Sign In Activity Result %s", result.toString())
         handleSignInResult(result)
@@ -40,9 +39,6 @@ class SignInFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.d("onCreate")
-        if (savedInstanceState == null) {
-            signInViewModel.createGoogleSignInClient()
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,7 +61,7 @@ class SignInFragment : Fragment() {
             lifecycleScope.launch {
                 val isAccUpdatedSuccessfully = signInViewModel.updateGoogleAccount(account)
                 if(isAccUpdatedSuccessfully){
-                  launchSignInSuccessFeedback()
+                    launchSignInSuccessFeedback()
                 }
             }
         } catch (e: ApiException) {
@@ -76,10 +72,11 @@ class SignInFragment : Fragment() {
 
 
     private fun launchSignInSuccessFeedback(){
-        val snackBar = Snackbar.make(binding.root, "Successfully Signed In", BaseTransientBottomBar.LENGTH_SHORT)
+        val snackBar = Snackbar.make(binding.root, "Successfully signed in!", BaseTransientBottomBar.LENGTH_SHORT)
         snackBar.addCallback(object : BaseCallback<Snackbar?>() {
             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                 super.onDismissed(transientBottomBar, event)
+                /* TODO: Need to fix  the error caused upon screen rotation; Cannot find fragment manager*/
                 findNavController().navigate(R.id.action_signInFragment_to_setup)
                 snackBar.removeCallback(this)
             }

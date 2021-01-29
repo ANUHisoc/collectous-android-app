@@ -18,7 +18,6 @@ public class DrivePermissionFragment extends Fragment {
     private FragmentDrivePermissionBinding binding;
     public DrivePermissionFragment(){}
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

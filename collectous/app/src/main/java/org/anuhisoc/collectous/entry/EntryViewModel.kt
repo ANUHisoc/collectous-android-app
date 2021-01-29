@@ -1,8 +1,6 @@
 package org.anuhisoc.collectous.entry
 
 import android.app.Application
-import android.graphics.Bitmap
-import android.widget.ImageView
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -13,24 +11,15 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.android.volley.Response
-import com.android.volley.toolbox.ImageRequest
-import com.android.volley.toolbox.Volley.newRequestQueue
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.anuhisoc.collectous.R
-import org.anuhisoc.collectous.store
-import timber.log.Timber
-import java.io.File
-import java.io.FileOutputStream
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 
 /**
@@ -39,30 +28,42 @@ import kotlin.coroutines.suspendCoroutine
 
 class EntryViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var _accountLiveData: MutableLiveData<GoogleSignInAccount> = MutableLiveData()
-    val accountLiveData: LiveData<GoogleSignInAccount> get() = _accountLiveData
-
     private val isAlreadySignedIn: Boolean
-        get() = GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)!=null
+        get() = account!=null
 
-    private var isDataSuccessfullyCached: Boolean = false
+    private val account: GoogleSignInAccount?
+        get() = GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)
 
-    val isSignInProcessCompleted:Boolean
-        get() = isAlreadySignedIn && isDataSuccessfullyCached
+    val isSignInProcessCompleted:Deferred<Boolean>
+        get() = viewModelScope.async {isAlreadySignedIn && isDataSuccessfullyCached()}
 
-    private val dataStore: DataStore<Preferences>
-        get() = getApplication<Application>()
-                .let{ app->
-                    app.createDataStore(app.applicationContext.getString(R.string.data_store_settings)) }
+    private val profileEmailKey = stringPreferencesKey(getApplication<Application>().getString(R.string.data_store_key_profile_email))
+
+    private val dataStore: DataStore<Preferences> = getApplication<Application>()
+            .let{ app->
+                app.createDataStore(app.applicationContext.getString(R.string.data_store_settings)) }
 
     val isOnBoardingCompleted
         get() = viewModelScope.async { isOnBoardingCompleted() }
 
+    private val onBoardingKey = getApplication<Application>().getString(R.string.data_store_key_on_boarding)
 
-    private val onBoardingKey
-        get() = getApplication<Application>().getString(R.string.data_store_key_on_boarding)
+    private val _isSplashScreenOverLiveData = MutableLiveData<Boolean>(false)
+    val isSplashScreenOverLiveData:LiveData<Boolean> =_isSplashScreenOverLiveData
 
+    init{
+        viewModelScope.launch {
+            /*Temporary: Making splashscreen visible for a while; We can replace it once we come up with a defined splashscreen.*/
+            delay(2000)
+            _isSplashScreenOverLiveData.value = true
+        }
+    }
 
+    private suspend fun isDataSuccessfullyCached(): Boolean {
+        return dataStore.data.map { preferences ->
+            preferences[profileEmailKey] ?: ""
+        }.first().isNotBlank()
+    }
 
 
     private suspend fun isOnBoardingCompleted(): Boolean {
@@ -81,6 +82,7 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
             settings[isOnBoardingCompletedKey] = true
         }
     }
+
 
 
 }

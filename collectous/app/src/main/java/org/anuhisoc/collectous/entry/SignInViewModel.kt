@@ -31,10 +31,9 @@ import kotlin.coroutines.suspendCoroutine
 class SignInViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    private val dataStore: DataStore<Preferences>
-        get() = getApplication<Application>()
-                .let{ app->
-                    app.createDataStore(app.applicationContext.getString(R.string.data_store_settings)) }
+    private val dataStore: DataStore<Preferences> = getApplication<Application>()
+            .let{ app->
+                app.createDataStore(app.applicationContext.getString(R.string.data_store_settings)) }
 
     private val profileNameKey
         get() = getApplication<Application>().getString(R.string.data_store_key_profile_name)
@@ -44,7 +43,6 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
 
     private val profilePictureFileName
         get() = getApplication<Application>().getString(R.string.filename_profile_picture)
-
 
     private val profilePictureOutputStream =
             FileOutputStream(File(getApplication<Application>().filesDir, profilePictureFileName))
@@ -56,8 +54,6 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
 
     val googleSignInClient:GoogleSignInClient
             by lazy { GoogleSignIn.getClient(getApplication<Application>().applicationContext, signInOption) }
-
-
 
 
     /*Returns true if successful*/
@@ -77,24 +73,18 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
                     Timber.d("Updated Google Account")
                 }
                 else{
-                   signOut()
+                    signOut()
                     cont.resume(false)
                 }
             }
-
         }
     }
 
-    fun createGoogleSignInClient(){
 
-
-
-    }
-
-    fun signOut(){
+    private fun signOut(){
         googleSignInClient.signOut()
-
     }
+
 
     private suspend fun cacheName(account: GoogleSignInAccount){
         account.displayName?.let { name->
@@ -110,6 +100,8 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
             dataStore.store(emailPrefKey, email)
         }
     }
+
+
     /*TODO we need to query for space before saving it to app specific internal storage*/
     private suspend fun cacheProfilePicture(account: GoogleSignInAccount, fileOutputStream: FileOutputStream?) {
         Timber.d("Downloading and Saving profile picture")

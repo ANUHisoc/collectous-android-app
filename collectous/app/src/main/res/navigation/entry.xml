@@ -3,16 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/entry"
-    app:startDestination="@id/splashScreenFragment">
+    app:startDestination="@id/entryFragment">
 
     <fragment
-        android:id="@+id/splashScreenFragment"
-        android:name="org.anuhisoc.collectous.entry.SplashScreenFragment"
-        android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" >
+        android:id="@+id/entryFragment"
+        android:name="org.anuhisoc.collectous.entry.EntryFragment"
+        android:label="fragment_entry"
+        tools:layout="@layout/fragment_entry" >
         <action
-            android:id="@+id/action_splashScreenFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
+            android:id="@+id/action_entryFragment_to_initialisation"
+            app:destination="@id/initialisation"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popUpTo="@id/entryFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"

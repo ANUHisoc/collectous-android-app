@@ -1,12 +1,13 @@
 package org.anuhisoc.collectous.entry
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.NavHostFragment
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import androidx.core.app.ActivityOptionsCompat
+import androidx.fragment.app.FragmentResultListener
+import androidx.lifecycle.Observer
+import org.anuhisoc.collectous.MainActivity
 import org.anuhisoc.collectous.R
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -18,35 +19,33 @@ import timber.log.Timber.DebugTree
 
 class EntryActivity : AppCompatActivity() {
 
-
-
+    companion object{
+        const val REQ_KEY_FRAGMENT_MAIN_LAUNCH="fragment_request_key_main"
+        const val RESULT_MAIN_LAUNCH="result_main_launch"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entry)
-        val entryViewModel:EntryViewModel by viewModels()
 
         if(savedInstanceState==null) {
             Timber.plant(DebugTree())
             Timber.d("Launching Entry Activity")
-            val navHostFragment =
-                    supportFragmentManager.findFragmentById(R.id.entry_nav_host_fragment) as NavHostFragment
-            val navController = navHostFragment.navController
-
-            lifecycleScope.launch {
-                /*Temporary: Just so to show there exist a splash screen*/
-                delay(3000)
-
-                val isOnBoardingCompleted = entryViewModel.isOnBoardingCompleted.await()
-                /*TODO we need to link onBoarding later*/
-                if(!entryViewModel.isSignInProcessCompleted){
-                    navController.navigate(R.id.initialisation)
-                }
-
-            }
         }
 
 
+        supportFragmentManager.setFragmentResultListener(REQ_KEY_FRAGMENT_MAIN_LAUNCH,this, FragmentResultListener { _, result ->
+            Timber.d("Result listener $result")
+            if(result.getBoolean(RESULT_MAIN_LAUNCH)){
+                launchMainActivity()
+            }
+        })
 
+    }
+
+    private fun launchMainActivity(){
+        val animBundle = ActivityOptionsCompat.makeCustomAnimation(applicationContext,R.anim.fade_in,R.anim.fade_out).toBundle()
+        startActivity(Intent(applicationContext,MainActivity::class.java),animBundle)
+        finish()
     }
 
 

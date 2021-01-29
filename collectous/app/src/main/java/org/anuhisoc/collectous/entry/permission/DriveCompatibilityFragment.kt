@@ -1,40 +1,54 @@
 package org.anuhisoc.collectous.entry.permission
 
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.anuhisoc.collectous.R
 import org.anuhisoc.collectous.databinding.FragmentDriveCompatibilityBinding
+import org.anuhisoc.collectous.entry.EntryActivity
+import org.anuhisoc.collectous.entry.EntryViewModel
+import timber.log.Timber
+
 
 /*TODO*/
 class DriveCompatibilityFragment : Fragment() {
 
 
     private lateinit var binding: FragmentDriveCompatibilityBinding
+    private val entryViewModel:EntryViewModel by activityViewModels()
+    private val driveCompatibilityViewModel: DriveCompatibilityViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = FragmentDriveCompatibilityBinding.inflate(inflater,container,false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launch {
-
-            /*Temporary: Just so to show there exist a drive compatibility screen;*/
-            delay(4000)
 
 
-            findNavController().navigate(R.id.action_driveCompatibilityFragment_to_mainActivity)
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Timber.d("onCreate")
+        driveCompatibilityViewModel.isDriveCompatible.observe(this, Observer {
+            Timber.d("isDriveComplatible $it")
+            requestToLaunchMainActivity()
+        })
+
+
     }
 
-
+    private fun requestToLaunchMainActivity() {
+        val bundle = bundleOf(EntryActivity.RESULT_MAIN_LAUNCH to true)
+        requireActivity().supportFragmentManager.setFragmentResult(EntryActivity.REQ_KEY_FRAGMENT_MAIN_LAUNCH,bundle)
+    }
 }
