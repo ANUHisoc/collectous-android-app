@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -77,7 +79,7 @@ class SignInFragment : Fragment() {
             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                 super.onDismissed(transientBottomBar, event)
                 /* TODO: Need to fix  the error caused upon screen rotation; Cannot find fragment manager*/
-                findNavController().navigate(R.id.action_signInFragment_to_setup)
+                findNavController().navigate(R.id.action_signInFragment_to_setup, bundleOf("name" to signInViewModel.accountName))
                 snackBar.removeCallback(this)
             }
         })

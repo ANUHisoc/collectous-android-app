@@ -44,21 +44,27 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
     private val profilePictureFileName
         get() = getApplication<Application>().getString(R.string.filename_profile_picture)
 
+    private lateinit var account:GoogleSignInAccount
+
+    val accountName:String
+        get() = if(::account.isInitialized) account.displayName ?: "" else ""
+
     private val profilePictureOutputStream =
             FileOutputStream(File(getApplication<Application>().filesDir, profilePictureFileName))
 
-    private val signInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+    private val basicSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .requestProfile()
             .build()
 
     val googleSignInClient:GoogleSignInClient
-            by lazy { GoogleSignIn.getClient(getApplication<Application>().applicationContext, signInOption) }
+            by lazy { GoogleSignIn.getClient(getApplication<Application>().applicationContext, basicSignInOption) }
 
 
     /*Returns true if successful*/
     suspend fun updateGoogleAccount(account: GoogleSignInAccount?):Boolean = suspendCoroutine{ cont->
         if (account != null) {
+            this.account = account
             val cacheAccountInfoJob = viewModelScope.launch {
                 withContext(Dispatchers.IO) {
                     cacheProfilePicture(account, profilePictureOutputStream)

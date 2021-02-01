@@ -9,13 +9,16 @@
     <string name="data_store_key_profile_name">profileName</string>
     <string name="data_store_key_profile_email">profileEmail</string>
 
-    <string name="drive_permission_description">Collectous needs to check if your Google Drive has been setup appropriately so that the app can access and update the survey related data which is stored in the Drive.</string>
+    <string name="drive_permission_description">Collectous needs to be able to access the Drive files that it creates, so that it can enable data collection.</string>
     <string name="permission_button_text">Give permission</string>
 
-    <string name="setup_welcome_message">Hi!</string>
+    <string name="setup_welcome_message">Hi</string>
     <string name="setup_welcome_description">Just a few setup needed.</string>
     <string name="setup_continue">continue</string>
 
     <string name="drive_compatibility_message">Checking whether the app related shared folder meets the app requirement.</string>
+    <string name="drive_share_key_request_message">Please enter the shared Drive link by your organisation.</string>
+    <string name="drive_link_edit_text_hint">Host shared folder\'s link</string>
+
 
 </resources>

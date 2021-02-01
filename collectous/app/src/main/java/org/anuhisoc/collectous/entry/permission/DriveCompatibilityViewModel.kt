@@ -1,30 +1,90 @@
 package org.anuhisoc.collectous.entry.permission
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.accounts.Account
+import android.app.Application
+import androidx.lifecycle.*
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.Scopes
+import com.google.api.client.extensions.android.http.AndroidHttp
+import com.google.api.client.extensions.android.json.AndroidJsonFactory
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.services.drive.Drive
+import com.google.api.services.drive.model.File
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.anuhisoc.collectous.R
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
+import java.io.OutputStream
+import java.util.*
 
-class DriveCompatibilityViewModel : ViewModel() {
+
+class DriveCompatibilityViewModel(application: Application) : AndroidViewModel(application) {
+
+
+    init {
+        viewModelScope.launch {
+            /*Temporary: Just so to show there exist a drive compatibility screen;*/
+            Timber.d("init")
+            delay(4000)
+
+            Timber.d("val changed")
+        }
+    }
+
+    fun checkCompatibility(link: String) {
+        if(link.isEmpty()){
+            _isDriveCompatible.value = false
+        }
+        else{
+            account?.let { account->
+            credential.selectedAccount = account
+            Timber.d(" $account")
+               Timber.d(GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)?.displayName)
+            /*.get("15loJ4Aary5FhtXBeRc-41QmeF6ewLPfs")*/
+            /*https://docs.google.com/spreadsheets/d/1SAmcrTz5Xveg7zPaZpzY3q3lV8niWMMvNV7jbH_mQAg/edit?usp=sharing*/
+                viewModelScope.launch {
+                    withContext(Dispatchers.IO){
+
+
+         /*               val file = drive.files().create(File())
+                        file?.isSupportsTeamDrives= true*/
+                    
+                        val file = drive.files().get("2PACX-1vQg-aCtyA27ThLlJm31txyKG5CimJHyvsuodQolena3SX50kemK88cSQb1NsVEoL6fIcOVtbk2fEsoA").run{
+                            supportsTeamDrives=true
+                            isSupportsTeamDrives = true
+                            execute()
+                        }
+                        Timber.d("File: %s",file.toPrettyString())
+
+
+
+                    }
+                }
+
+
+            }
+        }
+    }
+
+    private val account: Account?
+        get() = GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)?.account
 
     private val _isDriveCompatible = MutableLiveData<Boolean>()
     val isDriveCompatible: LiveData<Boolean> = _isDriveCompatible
 
 
-    init {
-
-        viewModelScope.launch {
-            /*Temporary: Just so to show there exist a drive compatibility screen;*/
-            Timber.d("init")
-            delay(4000)
-            _isDriveCompatible.value = true
-            Timber.d("val changed")
-        }
-    }
+    private val credential = GoogleAccountCredential.usingOAuth2(getApplication<Application>().applicationContext, Collections.singleton(Scopes.DRIVE_FILE))
 
 
+    private val appName = getApplication<Application>().resources.getString(R.string.app_name)
+
+    private val drive: Drive = Drive.Builder(AndroidHttp.newCompatibleTransport(), AndroidJsonFactory(), credential)
+                .setApplicationName(appName)
+                .build()
+
+/*credential.setSelectedAccount(mAccount.getAccount());*/
 
 }

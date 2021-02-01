@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import org.anuhisoc.collectous.R;
@@ -30,10 +31,21 @@ public class SetupFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.continueButton.setOnClickListener(button -> {
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_setupFragment_to_drivePermissionFragment);
-        });
+        String name = "";
+        if(getArguments()!=null) {
+            name = getArguments().getString("name", "");
+        }
 
+        binding.welcomeTextView.setText(getWelcomeMessage(name));
+
+        binding.continueButton.setOnClickListener(button -> Navigation.findNavController(view).navigate(R.id.action_setupFragment_to_drivePermissionFragment));
+
+    }
+
+
+    private String getWelcomeMessage(String name){
+        String defaultWelcomeMessage = getResources().getString(R.string.setup_welcome_message);
+        return !name.isEmpty()? defaultWelcomeMessage +" " +name +"!": defaultWelcomeMessage +"!";
     }
 
     @Override

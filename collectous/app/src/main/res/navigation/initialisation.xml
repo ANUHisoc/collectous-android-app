@@ -18,6 +18,7 @@
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true"
           />
+
     </fragment>
     <include app:graph="@navigation/setup" />
 </navigation>

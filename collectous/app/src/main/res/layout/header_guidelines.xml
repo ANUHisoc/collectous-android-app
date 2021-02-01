@@ -9,13 +9,13 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.175" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/header_bottom_guide_line"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.375" />
+        app:layout_constraintGuide_percent="0.35" />
 
 </merge>

@@ -9,6 +9,7 @@
     android:padding="10dp">
 
 
+
     <include layout="@layout/header_guidelines" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -20,7 +21,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/header_top_guide_line"
         android:text="@string/setup_welcome_message"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"/>
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/setup_description_text_view"
