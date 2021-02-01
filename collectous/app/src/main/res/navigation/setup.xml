@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/setup"
+    app:startDestination="@id/setupFragment">
+
+    <fragment
+        android:id="@+id/driveCompatibilityFragment"
+        android:name="org.anuhisoc.collectous.entry.permission.DriveCompatibilityFragment"
+        android:label="fragment_drive_compatibility"
+        tools:layout="@layout/fragment_drive_compatibility" >
+        <argument
+            android:name="link"
+            app:argType="string"
+            app:nullable="false"
+            android:defaultValue="" />
+    </fragment>
+    <fragment
+        android:id="@+id/drivePermissionFragment"
+        android:name="org.anuhisoc.collectous.entry.permission.DrivePermissionFragment"
+        android:label="fragment_drive_permission"
+        tools:layout="@layout/fragment_drive_permission" >
+        <action
+            android:id="@+id/action_drivePermissionFragment_to_driveCompatibilityFragment"
+            app:destination="@id/driveCompatibilityFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setupFragment"
+        android:name="org.anuhisoc.collectous.entry.permission.SetupFragment"
+        android:label="fragment_setup"
+        tools:layout="@layout/fragment_setup" >
+        <action
+            android:id="@+id/action_setupFragment_to_drivePermissionFragment"
+            app:destination="@id/drivePermissionFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <argument
+            android:name="name"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue=" " />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="org.anuhisoc.collectous.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+</navigation>

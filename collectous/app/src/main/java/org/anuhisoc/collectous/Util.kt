@@ -13,3 +13,4 @@ suspend fun <T>  DataStore<Preferences>.store(preferenceKey: Preferences.Key<T>,
 /* Formula from https://developer.android.com/training/multiscreen/screendensities#dips-pels
  px = dp * (dpi / 160)*/
 fun Int.toPx(dpi:Int) = this * (dpi/160)
+

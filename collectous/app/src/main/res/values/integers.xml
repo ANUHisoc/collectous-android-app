@@ -2,4 +2,6 @@
 <resources>
     <integer name="nav_icon_size">26</integer>
 
+    <integer name="fragment_transition_time">100</integer>
+
 </resources>
