@@ -19,6 +19,7 @@ import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 import java.util.*
+import kotlin.concurrent.thread
 
 
 class DriveCompatibilityViewModel(application: Application) : AndroidViewModel(application) {
@@ -29,43 +30,25 @@ class DriveCompatibilityViewModel(application: Application) : AndroidViewModel(a
             /*Temporary: Just so to show there exist a drive compatibility screen;*/
             Timber.d("init")
             delay(4000)
-
+            _isDriveCompatible.value = true
             Timber.d("val changed")
         }
     }
 
-    fun checkCompatibility(link: String) {
-        if(link.isEmpty()){
-            _isDriveCompatible.value = false
-        }
-        else{
-            account?.let { account->
-            credential.selectedAccount = account
+    fun checkCompatibility() {
+        account?.let { account->
+
             Timber.d(" $account")
-               Timber.d(GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)?.displayName)
-            /*.get("15loJ4Aary5FhtXBeRc-41QmeF6ewLPfs")*/
-            /*https://docs.google.com/spreadsheets/d/1SAmcrTz5Xveg7zPaZpzY3q3lV8niWMMvNV7jbH_mQAg/edit?usp=sharing*/
-                viewModelScope.launch {
-                    withContext(Dispatchers.IO){
-
-
-         /*               val file = drive.files().create(File())
-                        file?.isSupportsTeamDrives= true*/
-                    
-                        val file = drive.files().get("2PACX-1vQg-aCtyA27ThLlJm31txyKG5CimJHyvsuodQolena3SX50kemK88cSQb1NsVEoL6fIcOVtbk2fEsoA").run{
-                            supportsTeamDrives=true
-                            isSupportsTeamDrives = true
-                            execute()
-                        }
-                        Timber.d("File: %s",file.toPrettyString())
-
-
-
+            Timber.d(GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)?.displayName)
+            Timber.d("Is drive files null? ${drive.files()==null}")
+            thread {
+                    val fileList =  drive.files().list().execute()
+                    Timber.d("drive files list null? ${fileList}")
+                    drive.files().list().map {
+                        Timber.d("drivefile: $it")
                     }
-                }
-
-
             }
+
         }
     }
 
@@ -76,14 +59,15 @@ class DriveCompatibilityViewModel(application: Application) : AndroidViewModel(a
     val isDriveCompatible: LiveData<Boolean> = _isDriveCompatible
 
 
-    private val credential = GoogleAccountCredential.usingOAuth2(getApplication<Application>().applicationContext, Collections.singleton(Scopes.DRIVE_FILE))
-
+    private val credential = GoogleAccountCredential.usingOAuth2(getApplication<Application>().applicationContext, Collections.singleton(Scopes.DRIVE_FILE)).apply {
+        selectedAccount = account
+    }
 
     private val appName = getApplication<Application>().resources.getString(R.string.app_name)
 
     private val drive: Drive = Drive.Builder(AndroidHttp.newCompatibleTransport(), AndroidJsonFactory(), credential)
-                .setApplicationName(appName)
-                .build()
+            .setApplicationName(appName)
+            .build()
 
 /*credential.setSelectedAccount(mAccount.getAccount());*/
 

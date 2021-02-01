@@ -27,7 +27,6 @@ class DriveCompatibilityFragment : Fragment() {
 
     private lateinit var binding: FragmentDriveCompatibilityBinding
     private val driveCompatibilityViewModel: DriveCompatibilityViewModel by viewModels()
-    private var link = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -39,12 +38,7 @@ class DriveCompatibilityFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.d("onCreate")
-        arguments?.let {
-            link = it.getString("link").toString()
-        }
-        Timber.d("link is $link")
-        driveCompatibilityViewModel.checkCompatibility(link)
-
+        /*driveCompatibilityViewModel.checkCompatibility()*/
         driveCompatibilityViewModel.isDriveCompatible.observe(this, Observer {
             Timber.d("isDriveCompatible $it")
             requestToLaunchMainActivity()

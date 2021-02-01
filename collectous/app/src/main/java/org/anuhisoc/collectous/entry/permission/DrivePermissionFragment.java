@@ -42,7 +42,7 @@ public class DrivePermissionFragment extends Fragment {
 
     private void startDriveCompatibility(){
         Navigation.findNavController(requireActivity(), R.id.entry_nav_host_fragment)
-                .navigate(R.id.action_drivePermissionFragment_to_driveLinkFragment);
+                .navigate(R.id.action_drivePermissionFragment_to_driveCompatibilityFragment);
     }
 
 

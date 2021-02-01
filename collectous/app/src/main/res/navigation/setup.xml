@@ -10,11 +10,6 @@
         android:name="org.anuhisoc.collectous.entry.permission.DriveCompatibilityFragment"
         android:label="fragment_drive_compatibility"
         tools:layout="@layout/fragment_drive_compatibility" >
-        <action
-            android:id="@+id/action_driveCompatibilityFragment_to_mainActivity"
-            app:destination="@id/mainActivity"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out" />
         <argument
             android:name="link"
             app:argType="string"
@@ -27,8 +22,8 @@
         android:label="fragment_drive_permission"
         tools:layout="@layout/fragment_drive_permission" >
         <action
-            android:id="@+id/action_drivePermissionFragment_to_driveLinkFragment"
-            app:destination="@id/driveLinkFragment" />
+            android:id="@+id/action_drivePermissionFragment_to_driveCompatibilityFragment"
+            app:destination="@id/driveCompatibilityFragment" />
     </fragment>
     <fragment
         android:id="@+id/setupFragment"
@@ -53,13 +48,4 @@
         android:name="org.anuhisoc.collectous.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
-    <fragment
-        android:id="@+id/driveLinkFragment"
-        android:name="org.anuhisoc.collectous.entry.permission.DriveLinkFragment"
-        android:label="fragment_drive_link"
-        tools:layout="@layout/fragment_drive_link" >
-        <action
-            android:id="@+id/action_driveLinkFragment_to_driveCompatibilityFragment"
-            app:destination="@id/driveCompatibilityFragment" />
-    </fragment>
 </navigation>
