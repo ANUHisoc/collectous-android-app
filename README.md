@@ -28,7 +28,7 @@
 
 ### 🔖 References/Credits:
 - Learned how to convert callbacks into co-routines with the help of this [answer](https://stackoverflow.com/questions/48552925/existing-3-function-callback-to-kotlin-coroutines/48562175#48562175)
-- 
+- Got to know how to provide OAuth credential to Drive RESTful API via GoogleSignIn API  from this SO [post](https://stackoverflow.com/q/56949872/11200630)
 
 ### ⚙️ Installation:
 
