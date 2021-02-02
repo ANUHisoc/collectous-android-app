@@ -35,14 +35,11 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
             .let{ app->
                 app.createDataStore(app.applicationContext.getString(R.string.data_store_settings)) }
 
-    private val profileNameKey
-        get() = getApplication<Application>().getString(R.string.data_store_key_profile_name)
+    private val profileNameKey = stringPreferencesKey(getApplication<Application>().getString(R.string.data_store_key_profile_name))
 
-    private val profileEmailKey
-        get() = getApplication<Application>().getString(R.string.data_store_key_profile_email)
+    private val profileEmailKey = stringPreferencesKey(getApplication<Application>().getString(R.string.data_store_key_profile_email))
 
-    private val profilePictureFileName
-        get() = getApplication<Application>().getString(R.string.filename_profile_picture)
+    private val profilePictureFileName = getApplication<Application>().getString(R.string.filename_profile_picture)
 
     private lateinit var account:GoogleSignInAccount
 
@@ -94,16 +91,14 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
 
     private suspend fun cacheName(account: GoogleSignInAccount){
         account.displayName?.let { name->
-            val profileNamePrefKey = stringPreferencesKey(profileNameKey)
-            dataStore.store(profileNamePrefKey, name)
+            dataStore.store(profileNameKey, name)
         }
     }
 
 
     private suspend fun cacheEmail(account: GoogleSignInAccount){
         account.email?.let { email->
-            val emailPrefKey = stringPreferencesKey(profileEmailKey)
-            dataStore.store(emailPrefKey, email)
+            dataStore.store(profileEmailKey, email)
         }
     }
 

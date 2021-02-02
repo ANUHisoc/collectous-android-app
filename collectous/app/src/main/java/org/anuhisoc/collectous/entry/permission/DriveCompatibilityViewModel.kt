@@ -29,7 +29,7 @@ class DriveCompatibilityViewModel(application: Application) : AndroidViewModel(a
             /*Temporary: Just so to show there exist a drive compatibility screen;*/
             Timber.d("init")
             delay(4000)
-
+            _isDriveCompatible.value=true
             Timber.d("val changed")
         }
     }

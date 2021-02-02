@@ -46,7 +46,7 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
     val isOnBoardingCompleted
         get() = viewModelScope.async { isOnBoardingCompleted() }
 
-    private val onBoardingKey = getApplication<Application>().getString(R.string.data_store_key_on_boarding)
+    private val isOnBoardingKey = booleanPreferencesKey(getApplication<Application>().getString(R.string.data_store_key_on_boarding))
 
     private val _isSplashScreenOverLiveData = MutableLiveData<Boolean>(false)
     val isSplashScreenOverLiveData:LiveData<Boolean> =_isSplashScreenOverLiveData
@@ -67,7 +67,6 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private suspend fun isOnBoardingCompleted(): Boolean {
-        val isOnBoardingKey = booleanPreferencesKey(onBoardingKey)
         val isOnBoardingCompletedFlow = dataStore.data.map { preferences ->
             preferences[isOnBoardingKey] ?: true
         }
@@ -78,8 +77,7 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
 
     private suspend fun setOnBoardingCompleted() {
         dataStore.edit { settings ->
-            val isOnBoardingCompletedKey = booleanPreferencesKey(onBoardingKey)
-            settings[isOnBoardingCompletedKey] = true
+            settings[isOnBoardingKey] = true
         }
     }
 
