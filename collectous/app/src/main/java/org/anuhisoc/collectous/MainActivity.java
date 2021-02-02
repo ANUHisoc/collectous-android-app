@@ -2,6 +2,7 @@ package org.anuhisoc.collectous;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,9 +49,10 @@ public class MainActivity extends AppCompatActivity {
             /*Due to some weird default elevation*/
             binding.topMaterialToolBar.setElevation(0);
         }
-
-
-
+        
+        binding.topMaterialToolBar.setNavigationOnClickListener(navigationIcon -> {
+            binding.drawerLayout.open();
+        });
     }
 
     private void loadNavigationIcon(){
