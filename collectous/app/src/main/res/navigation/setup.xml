@@ -10,11 +10,6 @@
         android:name="org.anuhisoc.collectous.entry.permission.DriveCompatibilityFragment"
         android:label="fragment_drive_compatibility"
         tools:layout="@layout/fragment_drive_compatibility" >
-        <action
-            android:id="@+id/action_driveCompatibilityFragment_to_mainActivity"
-            app:destination="@id/mainActivity"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out" />
         <argument
             android:name="link"
             app:argType="string"

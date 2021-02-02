@@ -10,9 +10,15 @@
             android:title="Surveys" />
 
         <item
-            android:id="@+id/profile_item"
+            android:id="@+id/household_item"
+            android:icon="@drawable/ic_house"
+            android:title="Household" />
+
+
+        <item
+            android:id="@+id/my_profile_item"
             android:icon="@drawable/ic_profile_pin"
-            android:title="Profile" />
+            android:title="My profile" />
 
         <item
             android:id="@+id/settings_item"

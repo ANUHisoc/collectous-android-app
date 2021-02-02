@@ -12,7 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import org.anuhisoc.collectous.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
-    private var homeViewModel: HomeViewModel? = null
+
     private lateinit var binding: FragmentHomeBinding
 
 
@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
     }
 
 
