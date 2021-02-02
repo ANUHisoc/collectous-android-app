@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/data_collection"
+    app:startDestination="@id/findHouseholdFragment">
+
+    <fragment
+        android:id="@+id/findHouseholdFragment"
+        android:name="org.anuhisoc.collectous.collection.FindHouseholdFragment"
+        android:label="fragment_household"
+        tools:layout="@layout/fragment_find_household" >
+        <action
+            android:id="@+id/action_findHouseholdFragment_to_householdResultFragment"
+            app:destination="@id/householdResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/householdDetailFragment"
+        android:name="org.anuhisoc.collectous.collection.HouseholdDetailFragment"
+        android:label="fragment_household_detail"
+        tools:layout="@layout/fragment_household_detail" />
+    <fragment
+        android:id="@+id/householdResultFragment"
+        android:name="org.anuhisoc.collectous.collection.HouseholdResultFragment"
+        android:label="fragment_household_result"
+        tools:layout="@layout/fragment_household_result" >
+        <action
+            android:id="@+id/action_householdResultFragment_to_householdDetailFragment"
+            app:destination="@id/householdDetailFragment" />
+    </fragment>
+</navigation>

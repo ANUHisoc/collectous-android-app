@@ -10,9 +10,9 @@
             android:title="Surveys" />
 
         <item
-            android:id="@+id/household_item"
-            android:icon="@drawable/ic_house"
-            android:title="Household" />
+            android:id="@+id/find_household_item"
+            android:icon="@drawable/ic_find_household"
+            android:title="Find household" />
 
 
         <item

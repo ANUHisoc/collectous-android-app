@@ -19,10 +19,16 @@
     <string name="drive_compatibility_message">Checking whether the app related shared folder meets the app requirement.</string>
     <string name="drive_share_key_request_message">Please enter the shared Drive link by your organisation.</string>
     <string name="drive_link_edit_text_hint">Host shared folder\'s link</string>
-    
+
     <string name="survey_item_household">Household:</string>
     <string name="survey_item_member">Members:</string>
     <string name="survey_item_time">Time:</string>
+
+    <string name="person_item_name">Name:</string>
+
+    <string name="household_item_name">Household:</string>
+    <string name="household_item_location">Location:</string>
+    <string name="household_item_last_updated">Last updated:</string>
 
 
 </resources>
