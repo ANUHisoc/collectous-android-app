@@ -19,7 +19,6 @@ import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 import java.util.*
-import kotlin.concurrent.thread
 
 
 class DriveCompatibilityViewModel(application: Application) : AndroidViewModel(application) {
@@ -30,44 +29,47 @@ class DriveCompatibilityViewModel(application: Application) : AndroidViewModel(a
             /*Temporary: Just so to show there exist a drive compatibility screen;*/
             Timber.d("init")
             delay(4000)
-            _isDriveCompatible.value = true
+
             Timber.d("val changed")
         }
     }
 
-    fun checkCompatibility() {
-        account?.let { account->
-
+    fun checkCompatibility(link: String) {
+        if(link.isEmpty()){
+            _isDriveCompatible.value = false
+        }
+        else{
+            account?.let { account->
+            credential.selectedAccount = account
             Timber.d(" $account")
-            Timber.d(GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)?.displayName)
-            Timber.d("Is drive files null? ${drive.files()==null}")
-            thread {
-                    val fileList =  drive.files().list().execute()
-                    Timber.d("drive files list null? ${fileList}")
-                    drive.files().list().map {
-                        Timber.d("drivefile: $it")
+               Timber.d(GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)?.displayName)
+                viewModelScope.launch {
+                    withContext(Dispatchers.IO){
                     }
+                }
             }
-
         }
     }
 
+
     private val account: Account?
         get() = GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)?.account
+
 
     private val _isDriveCompatible = MutableLiveData<Boolean>()
     val isDriveCompatible: LiveData<Boolean> = _isDriveCompatible
 
 
-    private val credential = GoogleAccountCredential.usingOAuth2(getApplication<Application>().applicationContext, Collections.singleton(Scopes.DRIVE_FILE)).apply {
+   private val credential = GoogleAccountCredential.usingOAuth2(getApplication<Application>().applicationContext, Collections.singleton(Scopes.DRIVE_FILE)).apply {
         selectedAccount = account
     }
+
 
     private val appName = getApplication<Application>().resources.getString(R.string.app_name)
 
     private val drive: Drive = Drive.Builder(AndroidHttp.newCompatibleTransport(), AndroidJsonFactory(), credential)
-            .setApplicationName(appName)
-            .build()
+                .setApplicationName(appName)
+                .build()
 
 /*credential.setSelectedAccount(mAccount.getAccount());*/
 
