@@ -53,7 +53,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_people"
+            android:drawableStart="@drawable/ic_identifier"
             android:drawablePadding="5dp"
             style="@style/TextAppearance.MaterialComponents.Headline6"
             android:text="Identifier:" />

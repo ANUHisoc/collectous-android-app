@@ -5,33 +5,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.compose.ui.viewinterop.viewModel
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.Scopes
-import com.google.android.gms.common.api.Scope
-import org.anuhisoc.collectous.databinding.FragmentDriveCompatibilityBinding
+import org.anuhisoc.collectous.databinding.FragmentSheetCompatibilityBinding
 import org.anuhisoc.collectous.entry.EntryActivity
-import org.anuhisoc.collectous.entry.EntryViewModel
 import timber.log.Timber
 
 
 
-class DriveCompatibilityFragment : Fragment() {
+class SheetCompatibilityFragment : Fragment() {
 
 
-    private lateinit var binding: FragmentDriveCompatibilityBinding
-    private val driveCompatibilityViewModel: DriveCompatibilityViewModel by viewModels()
+    private lateinit var binding: FragmentSheetCompatibilityBinding
+    private val sheetCompatibilityViewModel: SheetCompatibilityViewModel by viewModels()
     private var link = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = FragmentDriveCompatibilityBinding.inflate(inflater, container, false)
+        binding = FragmentSheetCompatibilityBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -43,9 +36,9 @@ class DriveCompatibilityFragment : Fragment() {
             link = it.getString("link").toString()
         }
         Timber.d("link is $link")
-        driveCompatibilityViewModel.checkCompatibility(link)
+        sheetCompatibilityViewModel.checkCompatibility(link)
 
-        driveCompatibilityViewModel.isDriveCompatible.observe(this, Observer {
+        sheetCompatibilityViewModel.isDriveCompatible.observe(this, Observer {
             Timber.d("isDriveCompatible $it")
             requestToLaunchMainActivity()
         })

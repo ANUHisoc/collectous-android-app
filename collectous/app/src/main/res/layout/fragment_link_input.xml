@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
-    tools:context=".entry.permission.DriveLinkFragment">
+    tools:context=".entry.permission.LinkInputFragment">
 
 
     <ImageView
-        android:id="@+id/drive_image_view"
+        android:id="@+id/spreadsheet_image_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/ic_google_drive"
+        android:src="@drawable/ic_spreadsheet"
         app:layout_constraintBottom_toTopOf="@+id/header_bottom_guide_line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,12 +25,13 @@
         android:id="@+id/link_description_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/drive_image_view"
+        app:layout_constraintTop_toBottomOf="@id/spreadsheet_image_view"
         app:layout_constraintBottom_toTopOf="@id/link_text_input_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
         style="@style/TextAppearance.MaterialComponents.Caption"
-        android:text="@string/drive_share_key_request_message">
+        android:text="@string/link_share_request_message">
     </com.google.android.material.textview.MaterialTextView>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -41,7 +42,7 @@
         app:startIconDrawable="@drawable/ic_link"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/link_description_text_view"
-        android:hint="@string/drive_link_edit_text_hint"
+        android:hint="@string/link_edit_text_hint"
         app:layout_constraintBottom_toTopOf="@id/continue_button"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:errorEnabled="true">

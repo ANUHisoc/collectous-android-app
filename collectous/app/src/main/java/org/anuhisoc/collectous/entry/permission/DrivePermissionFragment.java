@@ -31,18 +31,14 @@ public class DrivePermissionFragment extends Fragment {
     private FragmentDrivePermissionBinding binding;
     private PermissionViewModel permissionViewModel;
 
-    public DrivePermissionFragment(){}
-    private final ActivityResultLauncher<Intent> drivePermissionLauncherHandler = registerForActivityResult(new StartActivityForResult(), new ActivityResultCallback< ActivityResult >(){
-        @Override
-        public void onActivityResult(ActivityResult result) {
-            handleDrivePermissionResult(result);
-        }
-    });
+
+    private final ActivityResultLauncher<Intent> drivePermissionLauncherHandler
+            = registerForActivityResult(new StartActivityForResult(), this::handleDrivePermissionResult);
 
 
     private void startDriveCompatibility(){
         Navigation.findNavController(requireActivity(), R.id.entry_nav_host_fragment)
-                .navigate(R.id.action_drivePermissionFragment_to_driveLinkFragment);
+                .navigate(R.id.action_drivePermissionFragment_to_linkInputFragment);
     }
 
 
@@ -72,11 +68,13 @@ public class DrivePermissionFragment extends Fragment {
     }
 
     private void checkForDrivePermissions() {
+
         if (!permissionViewModel.getHasDrivePermission()) {
             Timber.d("no permission");
             Intent signInIntent = permissionViewModel.getGoogleSignInClient().getSignInIntent();
             drivePermissionLauncherHandler.launch(signInIntent);
         } else {
+            Timber.d("has permission");
             startDriveCompatibility();
         }
     }

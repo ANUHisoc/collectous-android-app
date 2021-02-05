@@ -59,13 +59,13 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private suspend fun isDataSuccessfullyCached(): Boolean {
-        return dataStore.data.map { preferences ->
-            preferences[profileEmailKey] ?: ""
-        }.first().isNotBlank()
-    }
 
+    private suspend fun isDataSuccessfullyCached(): Boolean =
+            dataStore.data.map { preferences ->
+                preferences[profileEmailKey] ?: ""
+            }.first().isNotBlank()
 
+    
     private suspend fun isOnBoardingCompleted(): Boolean {
         val isOnBoardingCompletedFlow = dataStore.data.map { preferences ->
             preferences[isOnBoardingKey] ?: true

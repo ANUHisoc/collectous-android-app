@@ -1,13 +1,17 @@
 package org.anuhisoc.collectous.entry
 
 import android.app.Application
+import android.content.Context
 import android.graphics.Bitmap
+import android.net.*
 import android.widget.ImageView
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.createDataStore
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.volley.Response
 import com.android.volley.toolbox.ImageRequest
@@ -43,11 +47,13 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
 
     private lateinit var account:GoogleSignInAccount
 
+    private lateinit var networkCallback:ConnectivityManager.NetworkCallback
+
     val accountName:String
         get() = if(::account.isInitialized) account.displayName ?: "" else ""
 
-    private val profilePictureOutputStream =
-            FileOutputStream(File(getApplication<Application>().filesDir, profilePictureFileName))
+    private val profilePictureOutputStream by lazy{
+            FileOutputStream(File(getApplication<Application>().filesDir, profilePictureFileName))}
 
     private val basicSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
@@ -58,8 +64,22 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
             by lazy { GoogleSignIn.getClient(getApplication<Application>().applicationContext, basicSignInOption) }
 
 
+    private val _isSuccessSnackBarDismissed = MutableLiveData<Boolean>()
+    val isSuccessSnackBarDismissed: LiveData<Boolean> = _isSuccessSnackBarDismissed
+
+    private val connectionManager by lazy { getApplication<Application>()
+            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
+
+
     /*Returns true if successful*/
     suspend fun updateGoogleAccount(account: GoogleSignInAccount?):Boolean = suspendCoroutine{ cont->
+        viewModelScope.launch {
+            if(!isOnline())
+                cont.resume(false)
+            if(this@SignInViewModel::networkCallback.isInitialized)
+                connectionManager.unregisterNetworkCallback(networkCallback)
+        }
+
         if (account != null) {
             this.account = account
             val cacheAccountInfoJob = viewModelScope.launch {
@@ -102,6 +122,10 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+    fun setSnackBarDismissed(){
+        _isSuccessSnackBarDismissed.value = true
+    }
+
 
     /*TODO we need to query for space before saving it to app specific internal storage*/
     private suspend fun cacheProfilePicture(account: GoogleSignInAccount, fileOutputStream: FileOutputStream?) {
@@ -134,4 +158,20 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
         requestQueue.add(imageRequest)
     }
 
+
+    private suspend fun isOnline(): Boolean  = suspendCoroutine { cont->
+        val networkRequest = NetworkRequest.Builder().addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build()
+        networkCallback = object: ConnectivityManager.NetworkCallback(){
+            override fun onAvailable(network: Network) { super.onAvailable(network)
+                cont.resume(true) }
+            override fun onUnavailable() { super.onUnavailable()
+                cont.resume(false)
+            }
+            override fun onLosing(network: Network, maxMsToLive: Int) { super.onLosing(network, maxMsToLive)
+                cont.resume(false)
+            }
+        }
+        connectionManager.registerNetworkCallback(networkRequest,networkCallback)
+
+    }
 }

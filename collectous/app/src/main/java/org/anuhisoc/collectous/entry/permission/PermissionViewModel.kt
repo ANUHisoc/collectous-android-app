@@ -12,10 +12,10 @@ import com.google.api.services.drive.DriveScopes
 class PermissionViewModel(application: Application) : AndroidViewModel(application){
 
     private val appDriveScope = Scope(Scopes.DRIVE_FILE)
-    private val readDriveScope = Scope(DriveScopes.DRIVE_READONLY)
+
 
     private val driveSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestScopes(appDriveScope,readDriveScope)
+            .requestScopes(appDriveScope)
             .build()
 
     val googleSignInClient: GoogleSignInClient
@@ -25,12 +25,6 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
         get() = GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)
 
     val hasDrivePermission
-        get() = GoogleSignIn.hasPermissions(account,appDriveScope,readDriveScope)
-
-
-
-
-
-
+        get() = GoogleSignIn.hasPermissions(account,appDriveScope)
 
 }

@@ -10,13 +10,13 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.anuhisoc.collectous.R
-import org.anuhisoc.collectous.databinding.FragmentDriveLinkBinding
+import org.anuhisoc.collectous.databinding.FragmentLinkInputBinding
 import timber.log.Timber
 
 
-class DriveLinkFragment : Fragment() {
+class LinkInputFragment : Fragment() {
 
-    private lateinit var binding: FragmentDriveLinkBinding
+    private lateinit var binding: FragmentLinkInputBinding
     private var link = ""
 
     companion object{
@@ -26,31 +26,25 @@ class DriveLinkFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.continueButton.setOnClickListener {
-            findNavController().navigate(R.id.action_driveLinkFragment_to_driveCompatibilityFragment, bundleOf("link" to link))}
+            findNavController().navigate(R.id.action_linkInputFragment_to_sheetCompatibilityFragment, bundleOf("link" to link))}
 
 
         binding.linkTextInputLayout.apply{
             editText?.doOnTextChanged { charSequence, _, _, _ ->
-                val text = charSequence?.toString()
-                val isValidUrl = URLUtil.isValidUrl(text)
-                val hasWordDrive = text?.contains("drive")==true
-                val isTextEmpty = text?.isEmpty()?:false
-                text?.let { link = it }
-                Timber.d("Input text is $text is Valid URL $isValidUrl has drive $hasWordDrive ")
-                if(isValidUrl && hasWordDrive){
+                val inputText = charSequence?.toString()
+                val isValidUrl = URLUtil.isValidUrl(inputText)
+                val isTextEmpty = inputText?.isEmpty()?:false
+                inputText?.let { link = it }
+                Timber.d("Input text is $inputText is Valid URL $isValidUrl  ")
+                if(isValidUrl){
                     showContinueButton()
                     error = null }
-
                 if(isTextEmpty)
                     error = null
                 else if(!isValidUrl)
                     error = "URL not valid."
-                else if (!hasWordDrive)
-                    error= "URL might not a Drive shared link."
-
                 if(error!=null)
                     hideContinueButton()
-
             }
         }
     }
@@ -80,7 +74,7 @@ class DriveLinkFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = FragmentDriveLinkBinding.inflate(inflater,container,false)
+        binding = FragmentLinkInputBinding.inflate(inflater,container,false)
         return binding.root
     }
 

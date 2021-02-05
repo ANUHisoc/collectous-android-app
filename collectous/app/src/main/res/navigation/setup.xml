@@ -6,10 +6,10 @@
     app:startDestination="@id/setupFragment">
 
     <fragment
-        android:id="@+id/driveCompatibilityFragment"
-        android:name="org.anuhisoc.collectous.entry.permission.DriveCompatibilityFragment"
+        android:id="@+id/sheetCompatibilityFragment"
+        android:name="org.anuhisoc.collectous.entry.permission.SheetCompatibilityFragment"
         android:label="fragment_drive_compatibility"
-        tools:layout="@layout/fragment_drive_compatibility" >
+        tools:layout="@layout/fragment_sheet_compatibility" >
         <argument
             android:name="link"
             app:argType="string"
@@ -22,8 +22,12 @@
         android:label="fragment_drive_permission"
         tools:layout="@layout/fragment_drive_permission" >
         <action
-            android:id="@+id/action_drivePermissionFragment_to_driveLinkFragment"
-            app:destination="@id/driveLinkFragment" />
+            android:id="@+id/action_drivePermissionFragment_to_linkInputFragment"
+            app:destination="@id/linkInputFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/setupFragment"
@@ -48,13 +52,18 @@
         android:name="org.anuhisoc.collectous.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+
     <fragment
-        android:id="@+id/driveLinkFragment"
-        android:name="org.anuhisoc.collectous.entry.permission.DriveLinkFragment"
-        android:label="fragment_drive_link"
-        tools:layout="@layout/fragment_drive_link" >
+        android:id="@+id/linkInputFragment"
+        android:name="org.anuhisoc.collectous.entry.permission.LinkInputFragment"
+        android:label="fragment_link_input"
+        tools:layout="@layout/fragment_link_input" >
         <action
-            android:id="@+id/action_driveLinkFragment_to_driveCompatibilityFragment"
-            app:destination="@id/driveCompatibilityFragment" />
+            android:id="@+id/action_linkInputFragment_to_sheetCompatibilityFragment"
+            app:destination="@id/sheetCompatibilityFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
 </navigation>

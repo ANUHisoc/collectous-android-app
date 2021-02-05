@@ -9,11 +9,7 @@
         android:id="@+id/findHouseholdFragment"
         android:name="org.anuhisoc.collectous.collection.FindHouseholdFragment"
         android:label="fragment_household"
-        tools:layout="@layout/fragment_find_household" >
-        <action
-            android:id="@+id/action_findHouseholdFragment_to_householdResultFragment"
-            app:destination="@id/householdResultFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_find_household" />
     <fragment
         android:id="@+id/householdDetailFragment"
         android:name="org.anuhisoc.collectous.collection.HouseholdDetailFragment"

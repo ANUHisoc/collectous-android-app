@@ -21,12 +21,7 @@ import timber.log.Timber;
 public class SetupFragment extends Fragment {
 
 
-    public SetupFragment() { }
-
-
     private FragmentSetupBinding binding;
-
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
