@@ -8,9 +8,13 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.navigateUp
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
@@ -24,6 +28,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val mainViewModel:MainViewModel by viewModels()
+
+    private lateinit var  navController: NavController
+    private  lateinit var  appBarConfiguration :AppBarConfiguration
+
+    private val homeNavIconOnClickListener
+    get() =  View.OnClickListener {   binding.drawerLayout.open() }
+
+    private val backIconOnClickListener
+    get() = View.OnClickListener {  onBackPressed() }
 
     private val navDrawerProfileTarget: CustomTarget<Drawable>
         get() = object : CustomTarget<Drawable>() {
@@ -59,14 +72,36 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment?
         navHostFragment?.run {
-            val appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
+            appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
             NavigationUI.setupWithNavController(
                     binding.topMaterialToolBar, navController, appBarConfiguration)
             /*Due to some weird default elevation*/
             binding.topMaterialToolBar.elevation = 0f
         }
-        binding.topMaterialToolBar.setNavigationOnClickListener { binding.drawerLayout.open() }
+
+        navHostFragment?.navController?.let {navController = it}
+
+        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
+            NavigationUI.onNavDestinationSelected(menuItem,navController)
+            binding.drawerLayout.close()
+            true
+        }
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            binding.topMaterialToolBar.run {
+                Timber.d("destination id : ${destination.id}")
+                if(destination.id!= R.id.homeFragment)
+                    setNavigationOnClickListener(backIconOnClickListener)
+                else {
+                    /*Glide loaded icon disappears; need to load a temporary icon or else Text on app bar gets dislocated temporarily */
+                    binding.topMaterialToolBar.setNavigationIcon(R.drawable.ic_navigation_icon)
+                    loadIcon(appBarProfileTarget,resources.getInteger(R.integer.nav_icon_size))
+                    setNavigationOnClickListener(homeNavIconOnClickListener)
+                }
+            }
+        }
     }
+
 
 
     private fun userInterfaceSetup() {
@@ -82,7 +117,8 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun loadIcon(target: CustomTarget<Drawable>,iconSizeDp:Int) {
+
+    private fun loadIcon(target: CustomTarget<Drawable>, iconSizeDp:Int) {
         val file = File(applicationContext.filesDir, getString(R.string.filename_profile_picture))
         if (file.exists()) {
             val dpi = resources.displayMetrics.densityDpi
