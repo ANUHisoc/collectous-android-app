@@ -13,17 +13,16 @@
 
 
 ### 📜 Description:
-**Collectous** is Android app which enables data **collect**ion at an h**ous**ehold level to be done with ease.
-
+**Collectous** is  MVVM based Android app which enables data **collect**ion at an h**ous**ehold level to be done with ease.
 ### 📒 Documentation:
 -   [Product Backlog]()
 -   [Plans]()
 
 ### 🛠️ Tools used:
 
-- DataStore, Android architectecture component(ViewModel, LiveData), Navigation component, Kotlin co-routines
-- Libraries/APIs: [Timber](https://github.com/JakeWharton/timber),[Material Design Component](https://github.com/material-components/material-components-android), [Google Sign - In API](https://developers.google.com/identity/sign-in/android/start-integrating), [Volley](https://developer.android.com/training/volley),[Glide](https://github.com/bumptech/glide), [LeakCanary](https://square.github.io/leakcanary/) 
-- Languages: Java & Kotlin
+- Android architectecture components(Datastore,ViewModel, LiveData) and Navigation component.
+- Libraries/APIs: [Timber](https://github.com/JakeWharton/timber),[Material Design Component](https://github.com/material-components/material-components-android), [Google Sign - In API](https://developers.google.com/identity/sign-in/android/start-integrating), [Volley](https://developer.android.com/training/volley),[Glide](https://github.com/bumptech/glide) and [LeakCanary](https://square.github.io/leakcanary/).
+- Languages: Kotlin & Java
 
 
 ### 🔖 References/Credits:
@@ -32,4 +31,3 @@
 - Idea of using `Pattern` to parse email addresses is based on this SO [post](https://stackoverflow.com/a/15808057/11200630)
 
 ### ⚙️ Installation:
-
