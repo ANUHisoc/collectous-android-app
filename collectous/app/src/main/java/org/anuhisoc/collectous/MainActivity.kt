@@ -30,10 +30,10 @@ class MainActivity : AppCompatActivity() {
     private  lateinit var  appBarConfiguration :AppBarConfiguration
 
     private val homeNavIconOnClickListener
-    get() =  View.OnClickListener {   binding.drawerLayout.open() }
+        get() =  View.OnClickListener {   binding.drawerLayout.open() }
 
     private val backIconOnClickListener
-    get() = View.OnClickListener {  onBackPressed() }
+        get() = View.OnClickListener {  onBackPressed() }
 
     private val navDrawerProfileTarget: CustomTarget<Drawable>
         get() = object : CustomTarget<Drawable>() {
@@ -65,7 +65,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        userInterfaceSetup()
+
+        if(savedInstanceState==null)
+            userInterfaceSetup()
+        else
+            setupForOrientationChange()
+
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment?
         navHostFragment?.run {
@@ -81,12 +86,12 @@ class MainActivity : AppCompatActivity() {
         binding.navigationView.setNavigationItemSelectedListener { menuItem ->
             NavigationUI.onNavDestinationSelected(menuItem,navController)
             binding.drawerLayout.close()
-            true
+            false
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.topMaterialToolBar.run {
-                Timber.d("destination id : ${destination.id}")
+                Timber.d("destination label : ${destination.label}")
                 if(destination.id!= R.id.homeFragment)
                     setNavigationOnClickListener(backIconOnClickListener)
                 else {
@@ -97,9 +102,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
     }
 
 
+    private fun setupForOrientationChange(){
+        loadIcon(navDrawerProfileTarget,((resources.getInteger(R.integer.nav_icon_size)*1.75).toInt()))
+        loadNavBarName()
+    }
 
     private fun userInterfaceSetup() {
         loadIcon(appBarProfileTarget,resources.getInteger(R.integer.nav_icon_size))

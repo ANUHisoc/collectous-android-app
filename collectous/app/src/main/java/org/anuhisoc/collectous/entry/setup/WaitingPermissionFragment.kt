@@ -38,8 +38,9 @@ class WaitingPermissionFragment : Fragment() {
         waitingPermissionViewModel.checkCompatibility(emailAddress)
 
         waitingPermissionViewModel.isPermissionGranted.observe(this, Observer {
-            Timber.d("isDriveCompatible $it")
-            requestToLaunchMainActivity()
+            Timber.d("isPermissionGranted $it")
+            if(it==true)
+                requestToLaunchMainActivity()
         })
     }
 

@@ -84,6 +84,7 @@ class WaitingPermissionViewModel(application: Application) : AndroidViewModel(ap
                         Timber.d("Drive file uploaded")
                     }
                 }
+
                 job.invokeOnCompletion { _isPermissionGranted.value = true }
             }
         }

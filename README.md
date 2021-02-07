@@ -21,9 +21,9 @@
 
 ### 🛠️ Tools used:
 
-- DataStore, Android architectecture component(ViewModel, LiveData), Navigation component, Kotlin co-routines
+- Android architectecture components(Datastore,ViewModel, LiveData), Navigation component
 - Libraries/APIs: [Timber](https://github.com/JakeWharton/timber),[Material Design Component](https://github.com/material-components/material-components-android), [Google Sign - In API](https://developers.google.com/identity/sign-in/android/start-integrating), [Volley](https://developer.android.com/training/volley),[Glide](https://github.com/bumptech/glide), [LeakCanary](https://square.github.io/leakcanary/) 
-- Languages: Java & Kotlin
+- Languages: Kotlin & Java
 
 
 ### 🔖 References/Credits:

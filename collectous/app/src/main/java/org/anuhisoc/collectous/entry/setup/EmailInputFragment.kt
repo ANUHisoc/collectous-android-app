@@ -17,16 +17,16 @@ import timber.log.Timber
 class EmailInputFragment : Fragment() {
 
     private lateinit var binding: FragmentEmailInputBinding
-    private var link = ""
+    private var emailAddress = ""
 
     companion object{
-        private const val LINK_STRING_KEY = "link_text"
+        private const val EMAIL_STRING_KEY = "email_text"
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.continueButton.setOnClickListener {
-            findNavController().navigate(R.id.action_emailInputFragment_to_waitingPermissionFragment, bundleOf("link" to link))}
+            findNavController().navigate(R.id.action_emailInputFragment_to_waitingPermissionFragment, bundleOf("email" to emailAddress))}
 
 
         binding.emailTextInputLayout.apply{
@@ -34,8 +34,8 @@ class EmailInputFragment : Fragment() {
                 val inputText = charSequence?.toString()
                 val isValidEmail = charSequence?.isValidEmail() ?: false
                 val isTextEmpty = inputText?.isEmpty()?:false
-                inputText?.let { link = it }
-                Timber.d("Input text is $inputText is Valid URL $isValidEmail  ")
+                inputText?.let { emailAddress = it }
+                Timber.d("Input text is $inputText is Valid Email $isValidEmail  ")
                 if(isValidEmail){
                     showContinueButton()
                     error = null }
@@ -52,13 +52,13 @@ class EmailInputFragment : Fragment() {
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
         savedInstanceState?.let { bundle ->
-            binding.emailTextInputLayout.editText?.text?.insert(0,bundle.getString(LINK_STRING_KEY)) }
+            binding.emailTextInputLayout.editText?.text?.insert(0,bundle.getString(EMAIL_STRING_KEY)) }
 
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(LINK_STRING_KEY,link)
+        outState.putString(EMAIL_STRING_KEY,emailAddress)
     }
 
     private fun hideContinueButton() {

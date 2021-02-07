@@ -12,10 +12,18 @@ import com.google.api.services.drive.Drive
 import com.google.api.services.sheets.v4.Sheets
 import com.google.api.services.sheets.v4.model.ValueRange
 import org.anuhisoc.collectous.R
+import timber.log.Timber
 import java.util.*
+import java.util.concurrent.Callable
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import kotlin.concurrent.thread
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
+
 
 /*TODO: Need to consider encapsulating access to sheets and drive,building of layout based on result etc later on */
-class AddHouseholdViewModel(application: Application): AndroidViewModel(application) {
+class HouseholdAddViewModel(application: Application): AndroidViewModel(application) {
 
     private val account: Account?
         get() = GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)?.account
@@ -35,12 +43,35 @@ class AddHouseholdViewModel(application: Application): AndroidViewModel(applicat
             .setApplicationName(appName)
             .build()
 
-    private val householdSheetID by lazy { drive.files().list().setQ("name='household'").execute().files?.get(0)?.id }
+    private  val householdSheetID by lazy { drive.files().list().setQ("name='household'").execute().files?.get(0)?.id }
 
-    private val range = "A0:A7"
+    /*Temporary:TODO need to consider for unknwon number of filled columns*/
+    private val range = "A1:K1"
 
-    var response: ValueRange = sheets.spreadsheets().values()
-            .get(householdSheetID, range)
-            .execute()
 
+    private var executor: ExecutorService = Executors.newSingleThreadExecutor()
+
+    suspend fun fetchHeader():ValueRange? =
+            suspendCoroutine{ cont->
+                thread{
+                    try {
+                        cont.resume(
+                                executor.submit(Callable {
+                                    Timber.d("executor invoked")
+                                    sheets.spreadsheets().values()
+                                            .get(householdSheetID, range)
+                                            .execute()
+                                }).get())
+                    }
+                    catch (e:Exception){
+                        cont.resume(null)
+                    }
+                }
+            }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        executor.shutdown()
+    }
 }

@@ -15,26 +15,49 @@
             app:destination="@id/surveysFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="false" />
+            />
         <action
-            android:id="@+id/action_homeFragment_to_findHouseholdFragment"
-            app:destination="@id/findHouseholdFragment" />
+            android:id="@+id/action_homeFragment_to_householdFindFragment"
+            app:destination="@id/householdFindFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"/>
+
     </fragment>
     <fragment
         android:id="@+id/surveysFragment"
         android:name="org.anuhisoc.collectous.collection.SurveysFragment"
         android:label="Surveys"
-        tools:layout="@layout/fragment_surveys" />
+        tools:layout="@layout/fragment_surveys" >
+        <action
+            android:id="@+id/action_surveysFragment_to_householdFindFragment"
+            app:destination="@id/householdFindFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
 
     <fragment
-        android:id="@+id/findHouseholdFragment"
-        android:name="org.anuhisoc.collectous.collection.FindHouseholdFragment"
+        android:id="@+id/householdFindFragment"
+        android:name="org.anuhisoc.collectous.collection.HouseholdFindFragment"
         android:label="Find Household"
-        tools:layout="@layout/fragment_find_household" >
+        tools:layout="@layout/fragment_household_find" >
         <action
-            android:id="@+id/action_findHouseholdFragment_to_householdResultFragment"
+            android:id="@+id/action_householdFindFragment_to_householdResultFragment"
             app:destination="@id/householdResultFragment" />
+        <action
+            android:id="@+id/action_householdFindFragment_to_householdAddFragment"
+            app:destination="@id/householdAddFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            />
     </fragment>
     <fragment
         android:id="@+id/householdDetailFragment"
@@ -50,4 +73,16 @@
             android:id="@+id/action_householdResultFragment_to_householdDetailFragment"
             app:destination="@id/householdDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/householdAddFragment"
+        android:name="org.anuhisoc.collectous.collection.HouseholdAddFragment"
+        android:label="Household addition"
+        tools:layout="@layout/fragment_household_add" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="org.anuhisoc.collectous.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

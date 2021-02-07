@@ -10,7 +10,7 @@
             android:title="Surveys" />
 
         <item
-            android:id="@+id/findHouseholdFragment"
+            android:id="@+id/householdFindFragment"
             android:icon="@drawable/ic_find_household"
             android:title="Find household" />
 
@@ -20,7 +20,7 @@
             android:title="My profile" />
 
         <item
-            android:id="@+id/settings_item"
+            android:id="@+id/settingsFragment"
             android:icon="@drawable/ic_settings"
             android:title="Settings" />
 
