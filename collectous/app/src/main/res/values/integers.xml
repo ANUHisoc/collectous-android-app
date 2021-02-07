@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="nav_icon_size">26</integer>
+    <integer name="nav_icon_size">30</integer>
+
+    <integer name="fragment_transition_time">100</integer>
 
 </resources>

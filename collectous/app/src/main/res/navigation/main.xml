@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="org.anuhisoc.collectous.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_surveysFragment"
+            app:destination="@id/surveysFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_homeFragment_to_findHouseholdFragment"
+            app:destination="@id/findHouseholdFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/surveysFragment"
+        android:name="org.anuhisoc.collectous.collection.SurveysFragment"
+        android:label="Surveys"
+        tools:layout="@layout/fragment_surveys" />
+
+    <fragment
+        android:id="@+id/findHouseholdFragment"
+        android:name="org.anuhisoc.collectous.collection.FindHouseholdFragment"
+        android:label="Find Household"
+        tools:layout="@layout/fragment_find_household" >
+        <action
+            android:id="@+id/action_findHouseholdFragment_to_householdResultFragment"
+            app:destination="@id/householdResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/householdDetailFragment"
+        android:name="org.anuhisoc.collectous.collection.HouseholdDetailFragment"
+        android:label="Household Details"
+        tools:layout="@layout/fragment_household_detail" />
+    <fragment
+        android:id="@+id/householdResultFragment"
+        android:name="org.anuhisoc.collectous.collection.HouseholdResultFragment"
+        android:label="Search results"
+        tools:layout="@layout/fragment_household_result" >
+        <action
+            android:id="@+id/action_householdResultFragment_to_householdDetailFragment"
+            app:destination="@id/householdDetailFragment" />
+    </fragment>
+</navigation>

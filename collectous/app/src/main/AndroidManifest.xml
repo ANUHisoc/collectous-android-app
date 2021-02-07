@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.anuhisoc.collectous">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -19,6 +21,8 @@
         </activity>
         <activity android:name=".MainActivity">
         </activity>
-
+        <meta-data
+            android:name="com.google.android.API_KEY"
+            android:value="${apiKey}" />
     </application>
 </manifest>

@@ -9,4 +9,29 @@
     <string name="data_store_key_profile_name">profileName</string>
     <string name="data_store_key_profile_email">profileEmail</string>
 
+    <string name="drive_permission_description">Collectous needs to be able to store and access the Drive files that it creates, so to enable data collection.</string>
+    <string name="permission_button_text">Give permission</string>
+
+    <string name="setup_welcome_message">Hi</string>
+    <string name="setup_welcome_description">Just a few setup needed.</string>
+    <string name="setup_continue">continue</string>
+
+    <string name="waiting_permission_message">Waiting for a permission to be given from your organisation. Typically a waiting time could be 1 day.</string>
+
+
+    <string name="email_request_message">Please enter the email address of your organisation.</string>
+    <string name="email_edit_text_hint">Host email address</string>
+
+    <string name="survey_item_household">Household:</string>
+    <string name="survey_item_member">Members:</string>
+    <string name="survey_item_time">Time:</string>
+
+    <string name="person_item_name">Name:</string>
+
+    <string name="household_item_name">Household:</string>
+    <string name="household_item_location">Location:</string>
+    <string name="household_item_last_updated">Last updated:</string>
+
+
+
 </resources>

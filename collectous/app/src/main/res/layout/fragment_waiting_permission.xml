@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".entry.setup.WaitingPermissionFragment">
+    <include layout="@layout/header_guidelines"/>
+
+
+    <ImageView
+        android:id="@+id/waiting_image_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_waiting"
+        app:layout_constraintBottom_toTopOf="@+id/header_bottom_guide_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/header_top_guide_line" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/loading_description_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="center"
+        app:layout_constraintVertical_bias="0.35"
+        android:text="@string/waiting_permission_message"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/waiting_image_view"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

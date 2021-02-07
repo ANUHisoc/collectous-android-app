@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/setup"
+    app:startDestination="@id/setupFragment">
+
+    <fragment
+        android:id="@+id/waitingPermissionFragment"
+        android:name="org.anuhisoc.collectous.entry.setup.WaitingPermissionFragment"
+        android:label="fragment_waiting_permission"
+        tools:layout="@layout/fragment_waiting_permission" >
+        <argument
+            android:name="email"
+            app:argType="string"
+            app:nullable="false"
+            android:defaultValue="" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/drivePermissionFragment"
+        android:name="org.anuhisoc.collectous.entry.setup.DrivePermissionFragment"
+        android:label="fragment_drive_permission"
+        tools:layout="@layout/fragment_drive_permission" >
+        <action
+            android:id="@+id/action_drivePermissionFragment_to_emailInputFragment"
+            app:destination="@id/emailInputFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/setupFragment"
+        android:name="org.anuhisoc.collectous.entry.setup.SetupFragment"
+        android:label="fragment_setup"
+        tools:layout="@layout/fragment_setup" >
+        <action
+            android:id="@+id/action_setupFragment_to_drivePermissionFragment"
+            app:destination="@id/drivePermissionFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <argument
+            android:name="name"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue=" " />
+    </fragment>
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="org.anuhisoc.collectous.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+
+    <fragment
+        android:id="@+id/emailInputFragment"
+        android:name="org.anuhisoc.collectous.entry.setup.EmailInputFragment"
+        android:label="fragment_email_input"
+        tools:layout="@layout/fragment_email_input" >
+        <action
+            android:id="@+id/action_emailInputFragment_to_waitingPermissionFragment"
+            app:destination="@id/waitingPermissionFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+    </fragment>
+</navigation>

@@ -4,18 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".entry.SignInFragment">
 
-<!--TODO maybe use custom MDC button-->
+
+    <include layout="@layout/header_guidelines" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/app_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_primary"
+        app:layout_constraintTop_toTopOf="@id/header_top_guide_line"
+        app:layout_constraintBottom_toBottomOf="@id/header_top_guide_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"/>
+
+    <!--TODO maybe use custom MDC button-->
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:buttonSize="wide"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:buttonSize="wide"/>
+        app:layout_constraintTop_toBottomOf="@id/app_name_text_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

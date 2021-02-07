@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/surveysFragment"
+            android:icon="@drawable/ic_survey_list"
+            android:title="Surveys" />
+
+        <item
+            android:id="@+id/findHouseholdFragment"
+            android:icon="@drawable/ic_find_household"
+            android:title="Find household" />
+
+        <item
+            android:id="@+id/my_profile_item"
+            android:icon="@drawable/ic_profile_pin"
+            android:title="My profile" />
+
+        <item
+            android:id="@+id/settings_item"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+
+    </group>
+
+</menu>
