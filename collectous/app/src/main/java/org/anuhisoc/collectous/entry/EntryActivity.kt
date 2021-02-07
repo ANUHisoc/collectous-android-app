@@ -2,11 +2,9 @@ package org.anuhisoc.collectous.entry
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.FragmentResultListener
-import androidx.lifecycle.Observer
 import org.anuhisoc.collectous.MainActivity
 import org.anuhisoc.collectous.R
 import timber.log.Timber

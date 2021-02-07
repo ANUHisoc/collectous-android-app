@@ -1,4 +1,4 @@
-package org.anuhisoc.collectous.entry.permission;
+package org.anuhisoc.collectous.entry.setup;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".entry.permission.SetupFragment"
+    tools:context=".entry.setup.SetupFragment"
     android:padding="10dp">
 
 

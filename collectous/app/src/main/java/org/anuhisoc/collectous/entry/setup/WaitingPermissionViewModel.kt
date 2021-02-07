@@ -1,4 +1,4 @@
-package org.anuhisoc.collectous.entry.permission
+package org.anuhisoc.collectous.entry.setup
 
 
 import android.accounts.Account
@@ -61,6 +61,7 @@ class WaitingPermissionViewModel(application: Application) : AndroidViewModel(ap
                 Timber.d(GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)?.displayName)
                 val job =  viewModelScope.launch {
                     withContext(Dispatchers.IO){
+
                         /*Temporary*/
                         val fileMetadata = File()
                         fileMetadata.name = "household"

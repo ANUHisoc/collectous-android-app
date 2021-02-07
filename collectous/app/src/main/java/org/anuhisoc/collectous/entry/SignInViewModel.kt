@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.*
-import android.util.Log
 import android.widget.ImageView
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

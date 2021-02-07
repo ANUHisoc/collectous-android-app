@@ -1,4 +1,4 @@
-package org.anuhisoc.collectous.entry.permission
+package org.anuhisoc.collectous.entry.setup
 
 
 import android.os.Bundle
@@ -19,7 +19,7 @@ class WaitingPermissionFragment : Fragment() {
 
     private lateinit var binding: FragmentWaitingPermissionBinding
     private val waitingPermissionViewModel: WaitingPermissionViewModel by viewModels()
-    private var link = ""
+    private var emailAddress = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -32,10 +32,10 @@ class WaitingPermissionFragment : Fragment() {
         super.onCreate(savedInstanceState)
         Timber.d("onCreate")
         arguments?.let {
-            link = it.getString("link").toString()
+            emailAddress = it.getString("email").toString()
         }
-        Timber.d("link is $link")
-        waitingPermissionViewModel.checkCompatibility(link)
+        Timber.d("Email address is $emailAddress")
+        waitingPermissionViewModel.checkCompatibility(emailAddress)
 
         waitingPermissionViewModel.isPermissionGranted.observe(this, Observer {
             Timber.d("isDriveCompatible $it")

@@ -21,14 +21,15 @@
 
 ### 🛠️ Tools used:
 
-- DataStore, ViewModel, LiveData, Navigation component
-- Libraries/APIs: [Timber](https://github.com/JakeWharton/timber),[Material Design Component](https://github.com/material-components/material-components-android), [Google Sign - In API](https://developers.google.com/identity/sign-in/android/start-integrating), [Volley](https://developer.android.com/training/volley),[Glide](https://github.com/bumptech/glide)
+- DataStore, Android architectecture component(ViewModel, LiveData), Navigation component, Kotlin co-routines
+- Libraries/APIs: [Timber](https://github.com/JakeWharton/timber),[Material Design Component](https://github.com/material-components/material-components-android), [Google Sign - In API](https://developers.google.com/identity/sign-in/android/start-integrating), [Volley](https://developer.android.com/training/volley),[Glide](https://github.com/bumptech/glide), [LeakCanary](https://square.github.io/leakcanary/) 
 - Languages: Java & Kotlin
 
 
 ### 🔖 References/Credits:
 - Learned how to convert callbacks into co-routines with the help of this [answer](https://stackoverflow.com/questions/48552925/existing-3-function-callback-to-kotlin-coroutines/48562175#48562175)
 - Got to know how to provide OAuth credential to Drive RESTful API via GoogleSignIn API  from this SO [post](https://stackoverflow.com/q/56949872/11200630)
+- Idea of using `Pattern` to parse email addresses is based on this SO [post](https://stackoverflow.com/a/15808057/11200630)
 
 ### ⚙️ Installation:
 

@@ -1,4 +1,4 @@
-package org.anuhisoc.collectous.entry.permission
+package org.anuhisoc.collectous.entry.setup
 
 import android.os.Bundle
 import android.view.LayoutInflater

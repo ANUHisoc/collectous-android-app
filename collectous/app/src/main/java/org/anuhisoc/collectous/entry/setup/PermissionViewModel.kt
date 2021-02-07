@@ -1,4 +1,4 @@
-package org.anuhisoc.collectous.entry.permission
+package org.anuhisoc.collectous.entry.setup
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -7,7 +7,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.Scope
-import com.google.api.services.drive.DriveScopes
 
 class PermissionViewModel(application: Application) : AndroidViewModel(application){
 
