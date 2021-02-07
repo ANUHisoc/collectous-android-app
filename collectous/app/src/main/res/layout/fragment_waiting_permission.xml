@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".entry.permission.SheetCompatibilityFragment">
+    tools:context=".entry.permission.WaitingPermissionFragment">
     <include layout="@layout/header_guidelines"/>
 
 
     <ImageView
-        android:id="@+id/spreadsheet_image_view"
+        android:id="@+id/waiting_image_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/ic_spreadsheet"
+        android:src="@drawable/ic_waiting"
         app:layout_constraintBottom_toTopOf="@+id/header_bottom_guide_line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,11 +26,11 @@
         android:padding="5dp"
         android:gravity="center"
         app:layout_constraintVertical_bias="0.35"
-        android:text="@string/sheet_compatibility_message"
+        android:text="@string/waiting_permission_message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spreadsheet_image_view"
+        app:layout_constraintTop_toBottomOf="@id/waiting_image_view"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

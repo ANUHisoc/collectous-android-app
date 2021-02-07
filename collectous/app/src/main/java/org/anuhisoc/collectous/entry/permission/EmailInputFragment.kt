@@ -4,19 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.URLUtil
 import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.anuhisoc.collectous.R
-import org.anuhisoc.collectous.databinding.FragmentLinkInputBinding
+import org.anuhisoc.collectous.databinding.FragmentEmailInputBinding
+import org.anuhisoc.collectous.isValidEmail
 import timber.log.Timber
 
 
-class LinkInputFragment : Fragment() {
+class EmailInputFragment : Fragment() {
 
-    private lateinit var binding: FragmentLinkInputBinding
+    private lateinit var binding: FragmentEmailInputBinding
     private var link = ""
 
     companion object{
@@ -26,23 +26,23 @@ class LinkInputFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.continueButton.setOnClickListener {
-            findNavController().navigate(R.id.action_linkInputFragment_to_sheetCompatibilityFragment, bundleOf("link" to link))}
+            findNavController().navigate(R.id.action_emailInputFragment_to_waitingPermissionFragment, bundleOf("link" to link))}
 
 
-        binding.linkTextInputLayout.apply{
+        binding.emailTextInputLayout.apply{
             editText?.doOnTextChanged { charSequence, _, _, _ ->
                 val inputText = charSequence?.toString()
-                val isValidUrl = URLUtil.isValidUrl(inputText)
+                val isValidEmail = charSequence?.isValidEmail() ?: false
                 val isTextEmpty = inputText?.isEmpty()?:false
                 inputText?.let { link = it }
-                Timber.d("Input text is $inputText is Valid URL $isValidUrl  ")
-                if(isValidUrl){
+                Timber.d("Input text is $inputText is Valid URL $isValidEmail  ")
+                if(isValidEmail){
                     showContinueButton()
                     error = null }
                 if(isTextEmpty)
                     error = null
-                else if(!isValidUrl)
-                    error = "URL not valid."
+                else if(!isValidEmail)
+                    error = "Email address not valid."
                 if(error!=null)
                     hideContinueButton()
             }
@@ -52,7 +52,7 @@ class LinkInputFragment : Fragment() {
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
         savedInstanceState?.let { bundle ->
-            binding.linkTextInputLayout.editText?.text?.insert(0,bundle.getString(LINK_STRING_KEY)) }
+            binding.emailTextInputLayout.editText?.text?.insert(0,bundle.getString(LINK_STRING_KEY)) }
 
     }
 
@@ -74,7 +74,7 @@ class LinkInputFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = FragmentLinkInputBinding.inflate(inflater,container,false)
+        binding = FragmentEmailInputBinding.inflate(inflater,container,false)
         return binding.root
     }
 

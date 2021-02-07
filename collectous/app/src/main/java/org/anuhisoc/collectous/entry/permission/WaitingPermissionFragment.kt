@@ -9,22 +9,21 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import org.anuhisoc.collectous.databinding.FragmentSheetCompatibilityBinding
+import org.anuhisoc.collectous.databinding.FragmentWaitingPermissionBinding
 import org.anuhisoc.collectous.entry.EntryActivity
 import timber.log.Timber
 
 
+class WaitingPermissionFragment : Fragment() {
 
-class SheetCompatibilityFragment : Fragment() {
 
-
-    private lateinit var binding: FragmentSheetCompatibilityBinding
-    private val sheetCompatibilityViewModel: SheetCompatibilityViewModel by viewModels()
+    private lateinit var binding: FragmentWaitingPermissionBinding
+    private val waitingPermissionViewModel: WaitingPermissionViewModel by viewModels()
     private var link = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = FragmentSheetCompatibilityBinding.inflate(inflater, container, false)
+        binding = FragmentWaitingPermissionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -36,9 +35,9 @@ class SheetCompatibilityFragment : Fragment() {
             link = it.getString("link").toString()
         }
         Timber.d("link is $link")
-        sheetCompatibilityViewModel.checkCompatibility(link)
+        waitingPermissionViewModel.checkCompatibility(link)
 
-        sheetCompatibilityViewModel.isDriveCompatible.observe(this, Observer {
+        waitingPermissionViewModel.isPermissionGranted.observe(this, Observer {
             Timber.d("isDriveCompatible $it")
             requestToLaunchMainActivity()
         })

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 import androidx.annotation.NonNull;
@@ -38,7 +37,7 @@ public class DrivePermissionFragment extends Fragment {
 
     private void startDriveCompatibility(){
         Navigation.findNavController(requireActivity(), R.id.entry_nav_host_fragment)
-                .navigate(R.id.action_drivePermissionFragment_to_linkInputFragment);
+                .navigate(R.id.action_drivePermissionFragment_to_emailInputFragment);
     }
 
 
@@ -61,14 +60,15 @@ public class DrivePermissionFragment extends Fragment {
         binding.givePermissionButton.setOnClickListener(button -> checkForDrivePermissions());
     }
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentDrivePermissionBinding.inflate(inflater,container,false);
         return binding.getRoot();
     }
 
-    private void checkForDrivePermissions() {
 
+    private void checkForDrivePermissions() {
         if (!permissionViewModel.getHasDrivePermission()) {
             Timber.d("no permission");
             Intent signInIntent = permissionViewModel.getGoogleSignInClient().getSignInIntent();

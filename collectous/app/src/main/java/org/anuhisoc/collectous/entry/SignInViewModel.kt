@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.*
+import android.util.Log
 import android.widget.ImageView
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -62,7 +63,6 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
 
     val googleSignInClient:GoogleSignInClient
             by lazy { GoogleSignIn.getClient(getApplication<Application>().applicationContext, basicSignInOption) }
-
 
     private val _isSuccessSnackBarDismissed = MutableLiveData<Boolean>()
     val isSuccessSnackBarDismissed: LiveData<Boolean> = _isSuccessSnackBarDismissed

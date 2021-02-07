@@ -16,9 +16,11 @@
     <string name="setup_welcome_description">Just a few setup needed.</string>
     <string name="setup_continue">continue</string>
 
-    <string name="sheet_compatibility_message">Checking whether the spreadsheet meets the app requirement.</string>
-    <string name="link_share_request_message">Please enter the spreadsheet link shared by your organisation.</string>
-    <string name="link_edit_text_hint">Host shared link</string>
+    <string name="waiting_permission_message">Waiting for a permission to be given from your organisation. Typically a waiting time could be 1 day.</string>
+
+
+    <string name="email_request_message">Please enter the email address of your organisation.</string>
+    <string name="email_edit_text_hint">Host email address</string>
 
     <string name="survey_item_household">Household:</string>
     <string name="survey_item_member">Members:</string>
@@ -29,6 +31,7 @@
     <string name="household_item_name">Household:</string>
     <string name="household_item_location">Location:</string>
     <string name="household_item_last_updated">Last updated:</string>
+
 
 
 </resources>
