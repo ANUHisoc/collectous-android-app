@@ -5,9 +5,12 @@
     <string name="filename_profile_picture">img_user_profile_picture</string>
 
     <string name="data_store_settings">settings</string>
-    <string name="data_store_key_on_boarding">isOnBoardingCompleted</string>
+    <string name="data_store_key_on_boarding_completion">isOnBoardingCompleted</string>
     <string name="data_store_key_profile_name">profileName</string>
     <string name="data_store_key_profile_email">profileEmail</string>
+    <string name="data_store_key_root_drive_id">rootDriveId</string>
+    <string name="data_store_key_ngo_admin_email">ngoAdminEmail</string>
+    <string name="data_store_key_injected_file_compatible">isInjectedFilesCompatible</string>
 
     <string name="drive_permission_description">Collectous needs to be able to store and access the Drive files that it creates, so to enable data collection.</string>
     <string name="permission_button_text">Give permission</string>

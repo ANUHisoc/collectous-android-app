@@ -35,18 +35,24 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
         get() = GoogleSignIn.getLastSignedInAccount(getApplication<Application>().applicationContext)
 
     val isSignInProcessCompleted:Deferred<Boolean>
-        get() = viewModelScope.async {isAlreadySignedIn && isDataSuccessfullyCached()}
+        get() = viewModelScope.async {isAlreadySignedIn
+                && isDataSuccessfullyCached()
+                && isInjectedFilesCompatible()}
 
-    private val profileEmailKey = stringPreferencesKey(getApplication<Application>().getString(R.string.data_store_key_profile_email))
+    private val profileEmailKey = stringPreferencesKey(getApplication<Application>()
+        .getString(R.string.data_store_key_profile_email))
+
+    private val isInjectedFilesCompatible = booleanPreferencesKey(getApplication<Application>()
+        .getString(R.string.data_store_key_injected_file_compatible))
 
     private val dataStore: DataStore<Preferences> = getApplication<Application>()
-            .let{ app->
-                app.createDataStore(app.applicationContext.getString(R.string.data_store_settings)) }
+        .let{ app->
+            app.createDataStore(app.applicationContext.getString(R.string.data_store_settings)) }
 
     val isOnBoardingCompleted
         get() = viewModelScope.async { isOnBoardingCompleted() }
 
-    private val isOnBoardingKey = booleanPreferencesKey(getApplication<Application>().getString(R.string.data_store_key_on_boarding))
+    private val isOnBoardingKey = booleanPreferencesKey(getApplication<Application>().getString(R.string.data_store_key_on_boarding_completion))
 
     private val _isSplashScreenOverLiveData = MutableLiveData<Boolean>(false)
     val isSplashScreenOverLiveData:LiveData<Boolean> =_isSplashScreenOverLiveData
@@ -61,17 +67,23 @@ class EntryViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private suspend fun isDataSuccessfullyCached(): Boolean =
-            dataStore.data.map { preferences ->
-                preferences[profileEmailKey] ?: ""
-            }.first().isNotBlank()
+        dataStore.data.map { preferences ->
+            preferences[profileEmailKey] ?: ""
+        }.first().isNotBlank()
 
-    
+
+
+    private suspend fun isInjectedFilesCompatible(): Boolean {
+        return  dataStore.data.map { preferences ->
+            preferences[isInjectedFilesCompatible] ?: false
+        }.first()
+    }
+
     private suspend fun isOnBoardingCompleted(): Boolean {
-        val isOnBoardingCompletedFlow = dataStore.data.map { preferences ->
+        return dataStore.data.map { preferences ->
             preferences[isOnBoardingKey] ?: true
-        }
+        }.first()
         /*TODO temporarily setting it to true since on-boarding process is yet to be implemented*/
-        return isOnBoardingCompletedFlow.first()
     }
 
 

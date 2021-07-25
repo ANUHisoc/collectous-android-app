@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import org.anuhisoc.collectous.R
 import org.anuhisoc.collectous.databinding.FragmentEmailInputBinding
+import org.anuhisoc.collectous.entry.EntryViewModel
 import org.anuhisoc.collectous.isValidEmail
 import timber.log.Timber
 
@@ -22,13 +25,19 @@ class EmailInputFragment : Fragment() {
     companion object{
         private const val EMAIL_STRING_KEY = "email_text"
     }
+
+    private val emailInputViewModel: EmailInputViewModel by activityViewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.continueButton.setOnClickListener {
             findNavController().navigate(R.id.action_emailInputFragment_to_waitingPermissionFragment, bundleOf("email" to emailAddress))}
 
+        emailInputViewModel.ngoAdminEmail.observe(viewLifecycleOwner, Observer {
+                ngoEmail-> binding.emailTextInputLayout.editText?.setText(ngoEmail)
 
+        })
         binding.emailTextInputLayout.apply{
             editText?.doOnTextChanged { charSequence, _, _, _ ->
                 val inputText = charSequence?.toString()

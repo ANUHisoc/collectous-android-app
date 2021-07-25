@@ -18,10 +18,5 @@
             app:popUpTo="@id/entryFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="org.anuhisoc.collectous.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
     <include app:graph="@navigation/initialisation" />
 </navigation>

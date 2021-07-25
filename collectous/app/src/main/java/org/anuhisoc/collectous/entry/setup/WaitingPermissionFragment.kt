@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,6 +29,7 @@ class WaitingPermissionFragment : Fragment() {
     }
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.d("onCreate")
@@ -35,7 +37,7 @@ class WaitingPermissionFragment : Fragment() {
             emailAddress = it.getString("email").toString()
         }
         Timber.d("Email address is $emailAddress")
-        waitingPermissionViewModel.checkCompatibility(emailAddress)
+        waitingPermissionViewModel.checkCompatibilityFrequently(emailAddress)
 
         waitingPermissionViewModel.isPermissionGranted.observe(this, Observer {
             Timber.d("isPermissionGranted $it")
